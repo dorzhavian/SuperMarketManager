@@ -127,7 +127,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="customer.c" />
+    <ClCompile Include="date.c" />
+    <ClCompile Include="general.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="product.c" />
+    <ClCompile Include="shoppingCart.c" />
+    <ClCompile Include="shoppingItem.c" />
+    <ClCompile Include="superMarket.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="customer.h" />
+    <ClInclude Include="date.h" />
+    <ClInclude Include="general.h" />
+    <ClInclude Include="product.h" />
+    <ClInclude Include="shoppingCart.h" />
+    <ClInclude Include="shoppingItem.h" />
+    <ClInclude Include="superMarket.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
