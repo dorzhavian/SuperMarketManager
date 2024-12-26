@@ -7,18 +7,18 @@
 int initDate(Date* date) {
 	char temp[DATE_LEN] = { 0 };
 	printf("Enter a date in the format ddmmyyyy: ");
-	scanf("%8s", temp);
+	scanf("%s", temp);
 
 	if (strlen(temp) != 8) {
 		printf("Invalid date format. Must be 8 digits.\n");
 		return 0;
 	}
 
-
 	//divide the string
 	char dayPart[3] = { temp[0],temp[1],'\0' }; //dd
 	char monthPart[3] = { temp[2],temp[3],'\0' }; //mm
 	char yearPart[5] = { temp[4],temp[5],temp[6],temp[7],'\0' }; //yyyy
+	
 	//convert to int
 	int day = atoi(dayPart);
 	int month = atoi(monthPart);
