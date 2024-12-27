@@ -18,7 +18,7 @@
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="general.c">
+    <ClCompile Include="functions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="date.c">
@@ -39,9 +39,12 @@
     <ClCompile Include="superMarket.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="manager.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="general.h">
+    <ClInclude Include="functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="date.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="superMarket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

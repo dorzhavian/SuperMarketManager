@@ -3,17 +3,14 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "superMarket.h"
+#include "manager.h"
 #include "customer.h"
 
 
-int main() {
-	Customer c1;
-	if (!initCustomer(&c1))
-		printf("ERROR");
-	else
-	{
-		printCustomer(&c1);
-	}
-	free(c1.name);
+int main() 
+{
+	SuperMarket s = { 0 };
+	start(&s);
 	return 1;
 }

@@ -133,8 +133,9 @@
   <ItemGroup>
     <ClCompile Include="customer.c" />
     <ClCompile Include="date.c" />
-    <ClCompile Include="general.c" />
+    <ClCompile Include="functions.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="manager.c" />
     <ClCompile Include="product.c" />
     <ClCompile Include="shoppingCart.c" />
     <ClCompile Include="shoppingItem.c" />
@@ -143,7 +144,8 @@
   <ItemGroup>
     <ClInclude Include="customer.h" />
     <ClInclude Include="date.h" />
-    <ClInclude Include="general.h" />
+    <ClInclude Include="functions.h" />
+    <ClInclude Include="manager.h" />
     <ClInclude Include="product.h" />
     <ClInclude Include="shoppingCart.h" />
     <ClInclude Include="shoppingItem.h" />

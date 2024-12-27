@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #include "Customer.h"
-#include "general.h"
+#include "functions.h"
 
 #define MAX_LEN 255
 
@@ -20,54 +20,28 @@ int initCustomer(Customer* customer) {
 
 int initName(Customer* customer) 
 {
-	char* firstName;
-	char* lastName;
-	size_t len;
-
+	char* firstName = {0};
+	char* lastName = {0};
 	printf("Enter first name: \n");
 	do {
-		firstName = getStrExactLength();
-		if (!firstName) {
-			printf("Memory allocation failed.\n");
-			return 0;
-		}
-		len = strlen(firstName);
-		if (len == 0) 
+		myGets(firstName, MAX_LEN);
+		if (!firstName);
 			printf("Invalid input! Please try again.");
-	} while (len == 0);
+	} while (!firstName);
 	printf("Enter last name: \n");
 	do {
-		lastName = getStrExactLength();                       
-		if (!lastName) {
-			printf("Memory allocation failed.\n");
-			free(firstName);                                        
-			return 0;
-		}
-		len = strlen(lastName);
-		if (len == 0)
+		myGets(lastName, MAX_LEN);
+		if (!lastName)
 			printf("Invalid input! Please try again.");
-	} while (len == 0);
+	} while (!lastName);
 	fixNameStr(firstName);
 	fixNameStr(lastName);
-	size_t fullNameLength = strlen(firstName) + strlen(lastName) + 4; 
-	customer -> name = malloc(fullNameLength);
-	if (customer-> name == NULL) {
-		printf("Memory allocation failed.\n");
-		free(lastName);
-		free(firstName);
-		return 0;
-	}
 	strcpy(customer -> name, firstName);
 	strcat(customer -> name, " - ");
 	strcat(customer -> name, lastName);
 	strcat(customer -> name, "\0");
-	free(lastName);
-	free(firstName);
-    // FREE() customer -> name remember !!!!!!
 	return 1;
 }
-
-
 
 void initId(Customer* customer) 
 {

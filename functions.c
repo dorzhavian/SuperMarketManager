@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "general.h"
+#include "functions.h"
 
 #define MAX_LEN 255
 
@@ -28,6 +28,15 @@ char* myGets(char* buffer, int size)
 	return NULL;
 }
 
+void generateAndAddRandomDigits(char* buffer) 
+{
+	for (size_t i = 2; i < 7; i++) {
+		buffer[i] = '0' + (rand() % 10); 
+	}
+	buffer[7] = '\0'; 
+}
+
+/*
 char* getStrExactLength()
 {
 	char* theStr = NULL;
@@ -37,6 +46,7 @@ char* getStrExactLength()
 	theStr = _strdup(inpStr);                                                  //REMEMBER TO FO FREE() !!!!!!!!!!!!!!!!!!!!!
 	return theStr;
 }
+*/
 
 void* safeRealloc(void* base, size_t newByteCount)
 {
@@ -66,4 +76,5 @@ int isNumericString(const char* str) {
 	}
 	return 1; 
 }
+
 

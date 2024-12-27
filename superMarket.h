@@ -3,8 +3,10 @@
 #include "customer.h"
 #include "product.h"
 
+#define MAX_LEN 255	
+
 typedef struct {
-	char* superMarketName;
+	char superMarketName[MAX_LEN];
 	Customer* customersArr;
 	int numOfCustomers;
 	Product** productsPointersArr;

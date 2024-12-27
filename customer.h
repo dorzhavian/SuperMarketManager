@@ -2,9 +2,11 @@
 
 #define ID_LEN 10
 
+#define MAX_LEN 255
+
 typedef struct {
 	char id[ID_LEN];
-	char* name;
+	char name[MAX_LEN];
 	//ShoppingCart cart;
 } Customer;
 
