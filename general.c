@@ -5,6 +5,8 @@
 
 #include "general.h"
 
+#define MAX_LEN 255
+
 char* myGets(char* buffer, int size)
 {
 	char* ok;
@@ -26,6 +28,17 @@ char* myGets(char* buffer, int size)
 	return NULL;
 }
 
+char* getStrExactLength()
+{
+	char* theStr = NULL;
+	int len;
+	char inpStr[MAX_LEN];
+	// print to user from the func use this func
+	myGets(inpStr, sizeof(inpStr));
+	theStr = strdup(inpStr);
+	return theStr;
+}
+
 void* safeRealloc(void* base, size_t newByteCount)
 {
 	void* temp = realloc(base, newByteCount);
@@ -36,5 +49,5 @@ void* safeRealloc(void* base, size_t newByteCount)
 
 void customerUserName(char* firstName, char* lastName)
 {
-	//??
+	printf("Please enter first name: (up to 20 letters)");
 }
