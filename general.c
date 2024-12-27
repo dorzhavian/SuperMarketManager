@@ -31,11 +31,10 @@ char* myGets(char* buffer, int size)
 char* getStrExactLength()
 {
 	char* theStr = NULL;
-	int len;
 	char inpStr[MAX_LEN];
 	// print to user from the func use this func
 	myGets(inpStr, sizeof(inpStr));
-	theStr = strdup(inpStr);
+	theStr = _strdup(inpStr);                                                  //REMEMBER TO FO FREE() !!!!!!!!!!!!!!!!!!!!!
 	return theStr;
 }
 
@@ -47,7 +46,24 @@ void* safeRealloc(void* base, size_t newByteCount)
 	return temp;
 }
 
-void customerUserName(char* firstName, char* lastName)
+void fixNameStr(char* nameStr)
 {
-	printf("Please enter first name: (up to 20 letters)");
+	nameStr[0] = toupper(nameStr[0]); 
+	for (int i = 1; nameStr[i] != '\0'; i++) {
+		nameStr[i] = tolower(nameStr[i]); 
+	}
 }
+
+int isNumericString(const char* str) {
+	if (*str == '\0') {
+		return 0;
+	}
+	while (*str) {
+		if (!isdigit((unsigned char)*str)) {
+			return 0; 
+		}
+		str++;
+	}
+	return 1; 
+}
+

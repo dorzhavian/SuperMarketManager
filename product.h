@@ -23,6 +23,6 @@ typedef struct {
 
 int initProduct(Product* product);
 
-void printProduct(Product* product);
+void printProduct(const Product* product);
 
 Type getProductType();

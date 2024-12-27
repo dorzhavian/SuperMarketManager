@@ -62,7 +62,7 @@ void printProduct(const Product* product) {
 	printf("Amount: %d\n", product->amount);
 	printf("Type: %s\n", typeTilte[product->theType]);
 	printf("Expiration Date:");
-	printDate(&product->expierdDate);
+	printDate(&(product->expierdDate));
 }
 
 

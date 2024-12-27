@@ -13,6 +13,8 @@ int initCustomer(Customer* customer);
 
 void printCustomer(const Customer* customer);
 
-int initId(Customer* customer);
+void initId(Customer* customer);
 
-void initName();
+int initName(Customer* customer);
+
+// void freeCustomer(Customer* customer) - REMEMBER TO FREE EVERY PLACE THAT USED MALLOC;
