@@ -12,27 +12,26 @@
 
 int initCustomer(Customer* customer) {
 	int res;
-	res = initName(customer);
+	initName(customer);
 	initId(customer);
+	res = initShoppingCart(&customer->cart);
+	if (!res) 
+		free(&customer->cart);
 	return res;
 }
 
 
-int initName(Customer* customer) 
+void initName(Customer* customer) 
 {
-	char* firstName = {0};
-	char* lastName = {0};
+	char firstName[MAX_LEN];
+	char lastName[MAX_LEN];
 	printf("Enter first name: \n");
 	do {
 		myGets(firstName, MAX_LEN);
-		if (!firstName);
-			printf("Invalid input! Please try again.");
 	} while (!firstName);
 	printf("Enter last name: \n");
 	do {
 		myGets(lastName, MAX_LEN);
-		if (!lastName)
-			printf("Invalid input! Please try again.");
 	} while (!lastName);
 	fixNameStr(firstName);
 	fixNameStr(lastName);
@@ -40,7 +39,6 @@ int initName(Customer* customer)
 	strcat(customer -> name, " - ");
 	strcat(customer -> name, lastName);
 	strcat(customer -> name, "\0");
-	return 1;
 }
 
 void freeCustomer(Customer* customer)
@@ -53,17 +51,26 @@ void initId(Customer* customer)
 	char temp[MAX_LEN] = { 0 };
 	size_t len;
 	int ifOnlyDigits;
-	printf("Please enter valid ID: \n");
+	printf("Please enter valid ID, should be 9 digits.\nFor example: 123456789\n");
 	do {
 		scanf("%s", temp);
 		len = strlen(temp);
 		ifOnlyDigits = isNumericString(temp);
-		if (len != ID_LEN - 1)
-			printf("Please enter 9 digits!");
+		if (len != ID_LEN - 1 || !ifOnlyDigits)
+			printf("Please enter 9 digits!\nFor example: 123456789\n");
 	} while ((len != ID_LEN - 1) || (!ifOnlyDigits));
 	strcpy(customer->id, temp);
 }
 
+int isExistID()
+{
+	return 0;
+}
+
+int isExistName()
+{
+	return 0;
+}
 
 void printCustomer(const Customer* customer) {
 	printf("Customer Details:\n");

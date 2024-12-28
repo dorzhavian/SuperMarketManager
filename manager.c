@@ -15,7 +15,7 @@
 
 void printMenu()
 {
-	printf("\n-------------MENU----------------\n");
+	printf("\n\n-------------MENU----------------\n");
 	printf("0) Show Super Market \n");
 	printf("1) Add Product\n");
 	printf("2) Add Customer\n");
@@ -73,17 +73,20 @@ int start(SuperMarket* superMarket)
 void case1(SuperMarket* superMarket)
 {
 	char choice;
-	char bcInput[BC_LEN];
+	char bcInput[MAX_LEN];
 	printf("Adding new Product? y/Y : ");
 	scanf(" %c", &choice);
 	if (tolower(choice) == 'y')
 	{
-		addProductToSuperMarket(superMarket);
-		printf("\nProduct Added Successfully!!!\n");
+		int res = addProductToSuperMarket(superMarket);
+		if (!res)
+			free(superMarket->productsPointersArr);
+		else 
+			printf("\nProduct Added Successfully!!!\n");
 	}
 	else
 	{
-		printf("Please enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301");
+		printf("Please enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
 		checkValidBarcodeInput(bcInput);
 		int index = isProductExistByBarcode(superMarket, bcInput);
 		if (index == -1) 
@@ -94,13 +97,18 @@ void case1(SuperMarket* superMarket)
 			int addStock;
 			scanf("%d", &addStock);
 			superMarket->productsPointersArr[index]->quantity += addStock;
+			printf("Stock update Successfully!!\n");
 		}
 	}
 }
 
 void case2(SuperMarket* superMarket)
 {
-	return;
+	Customer customer;
+	initCustomer(&customer);
+	int res = addCustomer(superMarket, &customer);
+	if (!res)
+		free(superMarket->customersArr);
 }
 
 void case3(SuperMarket* superMarket)

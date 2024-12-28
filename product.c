@@ -64,7 +64,7 @@ void checkValidBarcodeInput(char* bcInput)
 	do
 	{
 		myGets(bcInput, MAX_LEN);                  // CHECK IF NEED FGETS CAUSE REMOVE ENTERS      
-		len = strlen(bcInput);
+		len = strlen(bcInput) + 1;                 // +1 FOR NULL TERMINATOR
 		preFix[0] = bcInput[0];
 		preFix[1] = bcInput[1];
 		preFix[2] = '\0';
@@ -76,10 +76,10 @@ void checkValidBarcodeInput(char* bcInput)
 				break;
 			}
 		}
-		if (!isValidPreFix)
-			printf("Invalid type of pre fix!\n");
 		if (len != BC_LEN)
 			printf("Invalid barcode length\n");
+		else if (!isValidPreFix)
+			printf("Invalid type of pre fix!\n");
 	} while (len != BC_LEN || !isValidPreFix);
 }
 

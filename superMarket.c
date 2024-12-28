@@ -63,7 +63,12 @@ int addProductToSuperMarket(SuperMarket* superMarket)
 
 int addCustomer(SuperMarket* superMarket, const Customer* customer)
 {
-    return 0;
+    superMarket->customersArr = (Customer*)safeRealloc(superMarket->customersArr, (superMarket->numOfCustomers + 1) * (sizeof(Customer)));
+    if (superMarket->customersArr == NULL)
+        return 0;         // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    superMarket->customersArr[superMarket->numOfCustomers] = *customer;
+    superMarket->numOfCustomers++;
+    return 1;
 }
 
 int buyAtTheSuperMarket()

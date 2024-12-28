@@ -1,5 +1,7 @@
 #pragma once
 
+#include "shoppingCart.h"
+
 #define ID_LEN 10
 
 #define MAX_LEN 255
@@ -7,7 +9,7 @@
 typedef struct {
 	char id[ID_LEN];
 	char name[MAX_LEN];
-	//ShoppingCart cart;
+	ShoppingCart cart;               // CHECK IF MAKE A POINTER 
 } Customer;
 
 
@@ -17,6 +19,10 @@ void printCustomer(const Customer* customer);
 
 void initId(Customer* customer);
 
-int initName(Customer* customer);
+void initName(Customer* customer);
+
+int isExistName();
+
+int isExistID();
 
 void freeCustomer(Customer* customer);   // use freeShoppingCart for each seller

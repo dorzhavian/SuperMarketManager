@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 
 #include "functions.h"
 
@@ -30,6 +31,8 @@ char* myGets(char* buffer, int size)
 
 void generateAndAddRandomDigits(char* buffer) 
 {
+	srand((unsigned int)time(NULL));  
+
 	for (size_t i = 2; i < 7; i++) {
 		buffer[i] = '0' + (rand() % 10); 
 	}
