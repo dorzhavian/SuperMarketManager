@@ -43,6 +43,11 @@ int initName(Customer* customer)
 	return 1;
 }
 
+void freeCustomer(Customer* customer)
+{
+
+}
+
 void initId(Customer* customer) 
 {
 	char temp[MAX_LEN] = { 0 };

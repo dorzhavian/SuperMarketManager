@@ -19,4 +19,4 @@ void initId(Customer* customer);
 
 int initName(Customer* customer);
 
-// void freeCustomer(Customer* customer) - REMEMBER TO FREE EVERY PLACE THAT USED MALLOC;
+void freeCustomer(Customer* customer);   // use freeShoppingCart for each seller

@@ -1,24 +1,63 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
 #include "superMarket.h"
+#include "functions.h"
+#include "product.h"
 
 int initSuperMarket(SuperMarket* superMarket)
 {
-    return 0;
+    if (superMarket == NULL) 
+        return 0;
+
+    superMarket->productsPointersArr = (Product**)malloc(sizeof(Product*)); 
+    if (superMarket->productsPointersArr == NULL) 
+        return 0;                                     // REMEMBER FREE() !!!!!!!!!!!!! 
+
+    superMarket->customersArr = (Customer*)malloc(sizeof(Customer));
+    if (superMarket->customersArr == NULL)  
+    {
+        free(superMarket->productsPointersArr);         
+        return 0;                                   // REMEMBER FREE() !!!!!!!!!!!!! 
+    }
+
+    superMarket->numOfProducts = 0;
+    superMarket->numOfCustomers = 0;
+
+    memset(superMarket->superMarketName, 0, MAX_LEN); 
+
+    return 1;
 }
+
 
 void printSuperMarket(const SuperMarket* superMarket)
 {
     printf("Super Market Name: %s \n", superMarket->superMarketName);
     printf("There are %d products\n", superMarket->numOfProducts);
-    printf("Name                 Barcode       Type                 Price      Count In Stoke       Expiry Date\n");
-    printf("----------------------------------------------------------------------------------------------------\n");
+    printf("%-20s %-20s %-20s %-10s %-20s %-15s\n",
+        "Name", "Barcode", "Type", "Price", "Count In Stock", "Expiry Date");
+    printf("--------------------------------------------------------------------------------------------------------\n");
     for (int i = 0; i < superMarket->numOfProducts; i++)
         printProduct((superMarket->productsPointersArr)[i]);
 }
 
-int addProductToSuperMarket(SuperMarket* superMarket, Product* product)
+int addProductToSuperMarket(SuperMarket* superMarket)
 {
-    return 0;
+    Product* pP = (Product*)malloc(sizeof(Product));          
+    if (!pP)  
+        return 0;           // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    superMarket->productsPointersArr = (Product**)safeRealloc(superMarket->productsPointersArr, (superMarket->numOfProducts + 1) * sizeof(Product*));
+    if (!superMarket->productsPointersArr)
+    {
+        free(pP);
+        return 0;          // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
+    initProduct(pP);
+    superMarket->productsPointersArr[superMarket->numOfProducts] = pP;
+    superMarket->numOfProducts++;
+    return 1;
 }
 
 int addCustomer(SuperMarket* superMarket, const Customer* customer)
@@ -32,6 +71,22 @@ int buyAtTheSuperMarket()
 }
 
 void printAllProductsByType(SuperMarket* superMarket, Type type)
+{
+
+}
+
+int isProductExistByBarcode(const SuperMarket* superMarket, char* bcInput)
+{
+    for (int i = 0; i < superMarket->numOfProducts; i++)
+    {
+        if (strcmp(bcInput, superMarket->productsPointersArr[i]->barCode) == 0)
+            return i;
+    }
+    return -1;
+}
+
+
+void freeSuperMarket(SuperMarket* superMarket)
 {
 
 }

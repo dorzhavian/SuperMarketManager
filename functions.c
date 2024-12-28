@@ -4,6 +4,7 @@
 #include <ctype.h>
 
 #include "functions.h"
+#include "product.h"
 
 #define MAX_LEN 255
 
@@ -36,18 +37,6 @@ void generateAndAddRandomDigits(char* buffer)
 	buffer[7] = '\0'; 
 }
 
-/*
-char* getStrExactLength()
-{
-	char* theStr = NULL;
-	char inpStr[MAX_LEN];
-	// print to user from the func use this func
-	myGets(inpStr, sizeof(inpStr));
-	theStr = _strdup(inpStr);                                                  //REMEMBER TO FO FREE() !!!!!!!!!!!!!!!!!!!!!
-	return theStr;
-}
-*/
-
 void* safeRealloc(void* base, size_t newByteCount)
 {
 	void* temp = realloc(base, newByteCount);
@@ -76,5 +65,3 @@ int isNumericString(const char* str) {
 	}
 	return 1; 
 }
-
-

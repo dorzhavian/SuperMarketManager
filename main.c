@@ -10,7 +10,15 @@
 
 int main() 
 {
-	SuperMarket s = { 0 };
+	SuperMarket s;
+	initSuperMarket(&s);
+	if (!initSuperMarket(&s))
+	{
+		free(&s);
+		printf("MEMORY FAILED");
+	}
 	start(&s);
+	free(s.productsPointersArr);
+	free(s.customersArr);
 	return 1;
 }

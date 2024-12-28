@@ -15,7 +15,9 @@ typedef struct {
 
 int initSuperMarket(SuperMarket* superMarket);
 void printSuperMarket(const SuperMarket* superMarket);
-int addProductToSuperMarket(SuperMarket* superMarket, Product* product);
+int addProductToSuperMarket(SuperMarket* superMarket);
 int addCustomer(SuperMarket* superMarket, const Customer* customer);
 int buyAtTheSuperMarket();
 void printAllProductsByType(SuperMarket* superMarket, Type type);
+int isProductExistByBarcode(const SuperMarket* superMarket, char* bcInput);
+void freeSuperMarket(SuperMarket* superMarket);

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "superMarket.h"
+
 void printMenu();
 
 int start(SuperMarket* superMarket);

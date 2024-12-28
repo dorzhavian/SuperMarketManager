@@ -1,11 +1,13 @@
 #pragma once
 
 #include "Date.h"
+#include "manager.h"
 
 #define NAME_LEN 21
 #define BC_LEN 8
+#define MAX_LEN 255
 
-typedef enum { eShelf, eFrozen, eFridge, eFruitVegtable, NofTypes } Type;
+typedef enum { eFruitVegtable, eFridge, eFrozen, eShelf, NofTypes } Type;
 static const char* types[NofTypes] = { "Fruit Vegtable", "Fridge","Frozen" , "Shelf"};
 static const char* preFixTypes[NofTypes] = { "FV", "FR","FZ", "SH"};
 
@@ -25,5 +27,7 @@ typedef struct {
 void initProduct(Product* product);
 
 void printProduct(const Product* product);
+
+void checkValidBarcodeInput(char* bcInput);
 
 Type getProductType();

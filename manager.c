@@ -5,8 +5,8 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "superMarket.h"
 #include "manager.h"
+#include "superMarket.h"
 #include "customer.h"
 #include "product.h"
 #include "functions.h"
@@ -14,6 +14,7 @@
 #include "shoppingCart.h"
 
 #define MAX_LEN 255
+
 
 void printMenu()
 {
@@ -34,8 +35,8 @@ int start(SuperMarket* superMarket)
 	int choice;
 	printf("Enter market name: ");
 	myGets(superMarket->superMarketName, MAX_LEN);
-	printMenu();
 	do {
+		printMenu();
 		printf("\nEnter your choice: \n");
 		scanf("%d", &choice);
 		switch (choice)
@@ -61,6 +62,9 @@ int start(SuperMarket* superMarket)
 		case 6:
 			case6(superMarket);
 			break;
+		case -1:
+			printf("Bye Bye");
+			break;
 		default:
 			printf("Wrong option, please try again!\n");
 			break;
@@ -71,8 +75,30 @@ int start(SuperMarket* superMarket)
 
 void case1(SuperMarket* superMarket)
 {
+	char choice;
+	char bcInput[BC_LEN];
 	printf("Adding new Product? y/Y : ");
-	//if yes init, if not update
+	scanf(" %c", &choice);
+	if (tolower(choice) == 'y')
+	{
+		addProductToSuperMarket(superMarket);
+		printf("\nProduct Added Successfully!!!\n");
+	}
+	else
+	{
+		printf("Please enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301");
+		checkValidBarcodeInput(bcInput);
+		int index = isProductExistByBarcode(superMarket, bcInput);
+		if (index == -1) 
+			printf("No such product barcode in the super market.");
+		else 
+		{
+			printf("How many items you want to add to stock? ");
+			int addStock;
+			scanf("%d", &addStock);
+			superMarket->productsPointersArr[index]->quantity += addStock;
+		}
+	}
 }
 
 void case2(SuperMarket* superMarket)

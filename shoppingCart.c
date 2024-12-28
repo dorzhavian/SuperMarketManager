@@ -18,3 +18,7 @@ void addProductToCart(ShoppingCart* shoppingCart, ShoppingItem* shoppingItem)
 {
 }
 
+void freeShoppingCart()
+{
+}
+
