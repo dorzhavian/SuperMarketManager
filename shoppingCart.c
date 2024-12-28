@@ -1,4 +1,5 @@
 #include "shoppingCart.h"
+#include "shoppingItem.h"
 
 int initShoppingCart(ShoppingCart* shoppingCart)
 {

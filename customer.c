@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#include "Customer.h"
+#include "customer.h"
 #include "functions.h"
 
 #define MAX_LEN 255

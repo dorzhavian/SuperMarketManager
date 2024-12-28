@@ -4,7 +4,6 @@
 #include <ctype.h>
 
 #include "functions.h"
-#include "product.h"
 
 #define MAX_LEN 255
 

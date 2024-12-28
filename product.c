@@ -4,9 +4,8 @@
 #include <string.h>
 
 #include "product.h"
+#include "date.h"
 #include "functions.h"
-#include "manager.h"
-#include "superMarket.h"
 
 
 void initProduct(Product* product)

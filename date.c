@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "Date.h"
+#include "date.h"
 
 #define DATE_LEN 9
 

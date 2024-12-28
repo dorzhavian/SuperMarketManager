@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Date.h"
-#include "manager.h"
+#include "date.h"
+#include "functions.h"
 
 #define NAME_LEN 21
 #define BC_LEN 8

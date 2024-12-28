@@ -4,8 +4,9 @@
 #include <string.h>
 
 #include "superMarket.h"
+#include "customer.h"
 #include "functions.h"
-#include "product.h"
+#include "manager.h"
 
 int initSuperMarket(SuperMarket* superMarket)
 {

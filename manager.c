@@ -8,10 +8,7 @@
 #include "manager.h"
 #include "superMarket.h"
 #include "customer.h"
-#include "product.h"
 #include "functions.h"
-#include "shoppingItem.h"
-#include "shoppingCart.h"
 
 #define MAX_LEN 255
 
