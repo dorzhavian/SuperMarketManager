@@ -67,5 +67,5 @@ void printCustomer(const Customer* customer) {
 	printf("-----------------\n");
 	printf("Name: %s\n", customer->name);
 	printf("Id: %s\n", customer->id);
-
+	//to add also cart
 }
