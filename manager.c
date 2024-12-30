@@ -25,7 +25,7 @@ void printMenu()
 
 int start(SuperMarket* superMarket)
 {
-	int choice;
+	int choice, res;
 	do {
 	
 		printMenu();
@@ -43,13 +43,17 @@ int start(SuperMarket* superMarket)
 			case2(superMarket);
 			break;
 		case 3:
-			case3(superMarket);
+			res = case3(superMarket);
+			if (res == 0)
+				printf("Error in shopping\n");
 			break;
 		case 4:
 			case4(superMarket);
 			break;
 		case 5:
-			case5(superMarket);
+			res = case5(superMarket);
+			if (res == 0)
+				printf("Error in shoppingCart managment\n");
 			break;
 		case 6:
 			case6(superMarket);
@@ -105,29 +109,87 @@ void case1(SuperMarket* superMarket)
 void case2(SuperMarket* superMarket)
 {
 	Customer customer;
+	int res;
 	do {
 		initCustomer(&customer);
-	} while (isExistID(&customer, superMarket));
-	if (isExistName(&customer,superMarket))
+		res = isExistID(&customer.id, superMarket);
+		if (res)
+			printf("ID %s is not unique!", customer.id);
+	} while (res);
+	if (isExistName(&customer.name, superMarket))
+	{
+		printf("This customer is already in market\nError adding customer\n");
 		return;
-	int res = addCustomer(superMarket, &customer);
+	}
+	res = addCustomer(superMarket, &customer);
 	if (!res)
 		free(superMarket->customersArr);
 }
 
-void case3(SuperMarket* superMarket)
+int case3(SuperMarket* superMarket)
 {
-	return;
+	int res3;
+	if (superMarket->numOfCustomers == 0)
+	{
+		printf("No customer listed to market\n");
+		return 0;
+	}
+	else if(superMarket->numOfProducts == 0)
+	{
+		printf("No products in market - cannot shop!\n");
+		
+	}
+	else 
+	{
+		res3 = whoIsShopping(superMarket);
+		if (res3 == 0)
+			return 0;
+	}
+	return 1;
 }
 
-void case4(SuperMarket* superMarket)
+int case4(SuperMarket* superMarket)
 {
-	return;
+	int res4;
+	if (superMarket->numOfCustomers == 0)
+	{
+		printf("No customer listed to market\n");
+		return 0;
+	}
+	else if (superMarket->numOfProducts == 0)
+	{
+		printf("No products in market - cannot shop!\n");
+
+	}
+	else
+	{
+		res4 = whoIsShopping(superMarket);
+		if (res4 == 0)
+			return 0;
+	}
+	return 1;
 }
 
-void case5(SuperMarket* superMarket)
+int case5(SuperMarket* superMarket)
 {
-	return;
+	int res5;
+	if (superMarket->numOfCustomers == 0)
+	{
+		printf("No customer listed to market\n");
+		return 0;
+	}
+	else if (superMarket->numOfProducts == 0)
+	{
+		printf("No products in market - cannot shop!\n");
+
+	}
+	else
+	{
+		res5 = whoIsShopping(superMarket);
+		if (res5 == 0)
+			return 0;
+	}
+	return 1;
 }
 
 void case6(SuperMarket* superMarket)
@@ -136,13 +198,12 @@ void case6(SuperMarket* superMarket)
 }
 
 
-int isExistName(const Customer* customer, const SuperMarket* superMarket)
+int isExistName(const char* customerName, const SuperMarket* superMarket)
 {
 	for (int i = 0; i < superMarket->numOfCustomers; i++)
 	{
-		if (strcmp(customer->name, superMarket->customersArr[i].name) == 0)
+		if (strcmp(customerName, superMarket->customersArr[i].name) == 0)
 		{
-			printf("This customer is already in market\nError adding customer\n");
 			return 1;
 		}
 	}
@@ -150,15 +211,35 @@ int isExistName(const Customer* customer, const SuperMarket* superMarket)
 }
 
 
-int isExistID(const Customer* customer, const SuperMarket* superMarket)
+int isExistID(const char* customerID, const SuperMarket* superMarket)
 {
 	for (int i = 0; i < superMarket->numOfCustomers; i++)
 	{
-		if (strcmp(customer->id, superMarket->customersArr[i].id) == 0)
+		if (strcmp(customerID, superMarket->customersArr[i].id) == 0)
 		{
-			printf("ID %s is not unique\n", customer->id);
 			return 1;
 		}
 	}
 	return 0;
+}
+
+int whoIsShopping(SuperMarket* superMarket)
+{
+	char* choice;
+	printAllCustomers(superMarket);
+	printf("Doing shopping now!!!\nWho is shopping? Enter customer name or ID\n");
+	choice = getStrExactLength();			//REMEMBER TO FREE()!!!!!!!!!!!!!!!!!
+	if (!choice)
+	{
+		return 0;
+	}
+	int res1, res2;
+	res1 = isExistID(choice, superMarket);
+	res2 = isExistName(choice, superMarket);
+	if (!res1 && !res2)
+	{
+		printf("This customer not listed");
+		return 0;
+	}
+	return 1;
 }

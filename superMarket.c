@@ -48,9 +48,7 @@ void printSuperMarket(const SuperMarket* superMarket)
     for (int i = 0; i < superMarket->numOfProducts; i++)
         printProduct((superMarket->productsPointersArr)[i]);
     if (superMarket->numOfCustomers > 0)
-        printf("\nThere are %d customers\n", superMarket->numOfCustomers);
-    for (int i = 0; i < superMarket->numOfCustomers; i++)
-        printCustomer(&((superMarket->customersArr)[i]));
+        printAllCustomers(superMarket);
 }
 
 int addProductToSuperMarket(SuperMarket* superMarket)
@@ -120,4 +118,11 @@ int uniqueBarcode(char* buffer, const SuperMarket* superMarket)				//added
         }
     }
     return 1;
+}
+
+void printAllCustomers(const SuperMarket* superMarket)
+{
+    printf("\nThere are %d customers\n", superMarket->numOfCustomers);
+    for (int i = 0; i < superMarket->numOfCustomers; i++)
+        printCustomer(&((superMarket->customersArr)[i]));
 }

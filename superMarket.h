@@ -30,3 +30,5 @@ int isProductExistByBarcode(const SuperMarket* superMarket, char* bcInput);
 void freeSuperMarket(SuperMarket* superMarket);
 
 int uniqueBarcode(char* buffer, const SuperMarket* superMarket);
+
+void printAllCustomers(const SuperMarket* superMarket);
