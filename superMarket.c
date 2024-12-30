@@ -4,9 +4,6 @@
 #include <string.h>
 
 #include "superMarket.h"
-#include "customer.h"
-#include "functions.h"
-#include "manager.h"
 
 int initSuperMarket(SuperMarket* superMarket)
 {
@@ -42,6 +39,8 @@ void printSuperMarket(const SuperMarket* superMarket)
     printf("--------------------------------------------------------------------------------------------------------\n");
     for (int i = 0; i < superMarket->numOfProducts; i++)
         printProduct((superMarket->productsPointersArr)[i]);
+
+
 }
 
 int addProductToSuperMarket(SuperMarket* superMarket)
@@ -56,6 +55,9 @@ int addProductToSuperMarket(SuperMarket* superMarket)
         return 0;          // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
     initProduct(pP);
+    while (uniqueBarcode(pP->barCode, superMarket) == 0) {
+        generateAndAddRandomDigits(pP->barCode);
+    }
     superMarket->productsPointersArr[superMarket->numOfProducts] = pP;
     superMarket->numOfProducts++;
     return 1;
@@ -95,4 +97,17 @@ int isProductExistByBarcode(const SuperMarket* superMarket, char* bcInput)
 void freeSuperMarket(SuperMarket* superMarket)
 {
 
+}
+
+
+int uniqueBarcode(char* buffer, const SuperMarket* superMarket)				//added
+{
+    for (size_t j = 0; j < superMarket->numOfProducts; j++)
+    {
+        if (!(strcmp(buffer, superMarket->productsPointersArr[j]->barCode)))
+        {
+            return 0;
+        }
+    }
+    return 1;
 }

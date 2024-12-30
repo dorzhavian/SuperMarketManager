@@ -1,6 +1,9 @@
 #pragma once
 
+
 #include "shoppingCart.h"
+#include "functions.h"
+//#include "superMarket.h"		//???
 
 #define ID_LEN 10
 
@@ -20,9 +23,5 @@ void printCustomer(const Customer* customer);
 void initId(Customer* customer);
 
 void initName(Customer* customer);
-
-int isExistName();
-
-int isExistID();
 
 void freeCustomer(Customer* customer);   // use freeShoppingCart for each seller

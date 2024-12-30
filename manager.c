@@ -6,9 +6,6 @@
 #include <ctype.h>
 
 #include "manager.h"
-#include "superMarket.h"
-#include "customer.h"
-#include "functions.h"
 
 #define MAX_LEN 255
 
@@ -39,7 +36,7 @@ int start(SuperMarket* superMarket)
 		switch (choice)
 		{
 		case 0:
-			printSuperMarket(superMarket);
+			case0(superMarket);
 			break;
 		case 1:
 			case1(superMarket);
@@ -68,6 +65,11 @@ int start(SuperMarket* superMarket)
 		}
 	} while (choice != -1);
 	return 1;
+}
+
+void case0(SuperMarket* superMarket)
+{
+	printSuperMarket(superMarket);
 }
 
 void case1(SuperMarket* superMarket)
@@ -105,7 +107,11 @@ void case1(SuperMarket* superMarket)
 void case2(SuperMarket* superMarket)
 {
 	Customer customer;
-	initCustomer(&customer);
+	do {
+		initCustomer(&customer);
+	} while (isExistID(&customer, superMarket));
+	if (isExistName(&customer,superMarket))
+		return;
 	int res = addCustomer(superMarket, &customer);
 	if (!res)
 		free(superMarket->customersArr);
@@ -129,4 +135,32 @@ void case5(SuperMarket* superMarket)
 void case6(SuperMarket* superMarket)
 {
 	return;
+}
+
+
+int isExistName(const Customer* customer, const SuperMarket* superMarket)
+{
+	for (int i = 0; i < superMarket->numOfCustomers; i++)
+	{
+		if (strcmp(customer->name, superMarket->customersArr[i].name) == 0)
+		{
+			printf("This customer is already in market\nError adding customer\n");
+			return 1;
+		}
+	}
+	return 0;
+}
+
+
+int isExistID(const Customer* customer, const SuperMarket* superMarket)
+{
+	for (int i = 0; i < superMarket->numOfCustomers; i++)
+	{
+		if (strcmp(customer->id, superMarket->customersArr[i].id) == 0)
+		{
+			printf("ID %s is not unique\n", customer->id);
+			return 1;
+		}
+	}
+	return 0;
 }

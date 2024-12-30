@@ -5,7 +5,6 @@
 #include <stdlib.h>
 
 #include "customer.h"
-#include "functions.h"
 
 #define MAX_LEN 255
 
@@ -46,7 +45,7 @@ void freeCustomer(Customer* customer)
 
 }
 
-void initId(Customer* customer) 
+void initId(Customer* customer)
 {
 	char temp[MAX_LEN] = { 0 };
 	size_t len;
@@ -62,15 +61,6 @@ void initId(Customer* customer)
 	strcpy(customer->id, temp);
 }
 
-int isExistID()
-{
-	return 0;
-}
-
-int isExistName()
-{
-	return 0;
-}
 
 void printCustomer(const Customer* customer) {
 	printf("Customer Details:\n");

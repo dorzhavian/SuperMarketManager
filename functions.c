@@ -32,11 +32,12 @@ char* myGets(char* buffer, int size)
 void generateAndAddRandomDigits(char* buffer) 
 {
 	srand((unsigned int)time(NULL));  
-
-	for (size_t i = 2; i < 7; i++) {
-		buffer[i] = '0' + (rand() % 10); 
-	}
-	buffer[7] = '\0'; 
+	//do {
+		for (size_t i = 2; i < 7; i++) {
+			buffer[i] = '0' + (rand() % 10);
+		}
+		buffer[7] = '\0';
+	//}while(uniqueBarcode(buffer, superMarket))
 }
 
 void* safeRealloc(void* base, size_t newByteCount)
@@ -67,3 +68,17 @@ int isNumericString(const char* str) {
 	}
 	return 1; 
 }
+
+/*
+int uniqueBarcode(char* buffer, const SuperMarket* superMarket)				//added
+{
+	for (size_t j = 0; j < superMarket->numOfProducts; j++)
+	{
+		if (!(strcmp(buffer, superMarket->productsPointersArr[j]->barCode)))
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+*/

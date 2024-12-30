@@ -4,11 +4,9 @@
 #include <string.h>
 
 #include "product.h"
-#include "date.h"
-#include "functions.h"
 
 
-void initProduct(Product* product)
+void initProduct(Product* product)//, SuperMarket* superMarket)
 {	
 	printf("Please enter product name up to 20 chars: \n");         
 	do {
@@ -19,7 +17,6 @@ void initProduct(Product* product)
 	
 	strcpy(product -> barCode, preFixTypes[product->theType]);
 	generateAndAddRandomDigits(product->barCode);
-
 	printf("Please enter price: \n");
 	do {
 		scanf("%f", &product->price);
