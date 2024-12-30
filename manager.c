@@ -9,7 +9,6 @@
 
 #define MAX_LEN 255
 
-
 void printMenu()
 {
 	printf("\n\n-------------MENU----------------\n");
