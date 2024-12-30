@@ -26,9 +26,8 @@ void printMenu()
 int start(SuperMarket* superMarket)
 {
 	int choice;
-	printf("Enter market name: ");
-	myGets(superMarket->superMarketName, MAX_LEN);
 	do {
+	
 		printMenu();
 		printf("\nEnter your choice: \n");
 		scanf("%d", &choice);

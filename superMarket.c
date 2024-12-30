@@ -7,24 +7,32 @@
 
 int initSuperMarket(SuperMarket* superMarket)
 {
+    
     if (superMarket == NULL) 
         return 0;
 
-    superMarket->productsPointersArr = (Product**)malloc(sizeof(Product*)); 
-    if (superMarket->productsPointersArr == NULL) 
-        return 0;                                     // REMEMBER FREE() !!!!!!!!!!!!! 
+    printf("Enter market name: ");
+    superMarket->superMarketName = getStrExactLength();
+    if (superMarket->superMarketName == NULL)
+        return 0;                                     //REMEMBER TO FREE()!!!!!!!!!!!!!
 
+    superMarket->productsPointersArr = (Product**)malloc(sizeof(Product*)); 
+    if (superMarket->productsPointersArr == NULL)
+    {
+        free(superMarket->superMarketName);
+        return 0;                                     // REMEMBER FREE() !!!!!!!!!!!!! 
+    }
     superMarket->customersArr = (Customer*)malloc(sizeof(Customer));
     if (superMarket->customersArr == NULL)  
     {
+        free(superMarket->superMarketName);
         free(superMarket->productsPointersArr);         
         return 0;                                   // REMEMBER FREE() !!!!!!!!!!!!! 
     }
 
     superMarket->numOfProducts = 0;
     superMarket->numOfCustomers = 0;
-
-    memset(superMarket->superMarketName, 0, MAX_LEN); 
+   
 
     return 1;
 }

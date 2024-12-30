@@ -5,18 +5,16 @@
 
 #include "date.h"
 
-#define DATE_LEN 9
 
 int initDate(Date* date) {
-	char temp[DATE_LEN] = { 0 };
-	printf("Enter a date in the format ddmmyyyy: ");
-	scanf("%s", temp);
+	char temp[MAX_LEN] = { 0 };
+	size_t res;
 
-	if (strlen(temp) != 8) {
-		printf("Invalid date format. Must be 8 digits.\n");
+	printf("Enter a date in the format ddmmyyyy: \n");
+	myGets(temp, sizeof(temp));
+	res = strlen(temp);
+	if (res != 8)
 		return 0;
-	}
-
 	//divide the string
 	char dayPart[3] = { temp[0],temp[1],'\0' }; //dd
 	char monthPart[3] = { temp[2],temp[3],'\0' }; //mm
@@ -27,26 +25,27 @@ int initDate(Date* date) {
 	int month = atoi(monthPart);
 	int year = atoi(yearPart);
 
-	if (month < 1 || month > 12) 
-		return 0; 
+	if (month < 1 || month > 12)
+		return -1;
 
 	if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) 
 	{
 		if (day < 1 || day > 31) 
-			return 0;
+			return -1;
 	}
 	if (month == 4 || month == 6 || month == 9 || month == 11) 
 	{
 		if (day < 1 || day > 30) 
-			return 0;
+
+			return -1;
 	}
 	if (month == 2) 
 	{
 		if (day < 1 || day > 28) 
-			return 0;
+			return -1;
 	}
 	if (year < 2024 || year > 2030)
-		return 0;
+		return -1;
 
 	date->day = day;
 	date->month = month;

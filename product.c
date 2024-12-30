@@ -30,7 +30,11 @@ void initProduct(Product* product)//, SuperMarket* superMarket)
 	int res;
 	do {
 		res = initDate(&product->expierdDate);
-	} while(res == 0);
+		if(res == -1)
+			printf("Date is not valid!\n");
+		if(res == 0)
+			printf("Invalid date format. Must be 8 digits.\n");
+	} while(res != 1);
 }
 
 

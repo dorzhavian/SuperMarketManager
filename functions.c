@@ -29,6 +29,15 @@ char* myGets(char* buffer, int size)
 	return NULL;
 }
 
+char* getStrExactLength()
+{
+	char* theStr = NULL;
+	char inpStr[MAX_LEN];
+	myGets(inpStr, sizeof(inpStr));
+	theStr = _strdup(inpStr);
+	return theStr;
+}
+
 void generateAndAddRandomDigits(char* buffer) 
 {
 	srand((unsigned int)time(NULL));  
@@ -68,17 +77,3 @@ int isNumericString(const char* str) {
 	}
 	return 1; 
 }
-
-/*
-int uniqueBarcode(char* buffer, const SuperMarket* superMarket)				//added
-{
-	for (size_t j = 0; j < superMarket->numOfProducts; j++)
-	{
-		if (!(strcmp(buffer, superMarket->productsPointersArr[j]->barCode)))
-		{
-			return 1;
-		}
-	}
-	return 0;
-}
-*/

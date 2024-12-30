@@ -11,8 +11,8 @@
 
 typedef struct {
 	char id[ID_LEN];
-	char name[MAX_LEN];
-	ShoppingCart cart;               // CHECK IF MAKE A POINTER 
+	char* name;						//REMEMBER TO FREE()!!!!!!!!!!
+	ShoppingCart cart;              // CHECK IF MAKE A POINTER 
 } Customer;
 
 
@@ -22,6 +22,6 @@ void printCustomer(const Customer* customer);
 
 void initId(Customer* customer);
 
-void initName(Customer* customer);
+int initName(Customer* customer);
 
 void freeCustomer(Customer* customer);   // use freeShoppingCart for each seller
