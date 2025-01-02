@@ -22,9 +22,9 @@ void printCustomer(const Customer* customer);
 
 void initId(Customer* customer);
 
-int initFirstName(char* firstName);
+int initFirstName(char** firstName);
 
-int initLastName(char* lastName);
+int initLastName(char** lastName);
 
 void mergeIntoFullName(Customer* customer, char* firstName, char* lastName);
 

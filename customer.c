@@ -19,39 +19,39 @@ int initCustomer(Customer* customer) {
 	return res;
 }
 
-int initFirstName(char* firstName)
+int initFirstName(char** firstName)             //Call by reference
 {
     size_t len;
     printf("Enter first name: \n");
     do {
-        firstName = getStrExactLength();
-        if (!firstName) {
+        *firstName = getStrExactLength();
+        if (!(*firstName)) {
             printf("Memory allocation failed.\n");
             return 0;
         }
-        len = strlen(firstName);
+        len = strlen(*firstName);
         if (len == 0)
             printf("Invalid input! Please try again.");
     } while (len == 0);
-    fixNameStr(firstName);
+    fixNameStr(*firstName);
     return 1;
 }
 
-int initLastName(char* lastName)
+int initLastName(char** lastName)           //Call by reference
 {
     size_t len;
     printf("Enter last name: \n");
     do {
-        lastName = getStrExactLength();
-        if (!lastName) {
+        *lastName = getStrExactLength();
+        if (!(*lastName)) {
             printf("Memory allocation failed.\n");
             return 0;
         }
-        len = strlen(lastName);
+        len = strlen(*lastName);
         if (len == 0)
             printf("Invalid input! Please try again.");
     } while (len == 0);
-    fixNameStr(lastName);
+    fixNameStr(*lastName);
     return 1;
 }
 
@@ -66,12 +66,12 @@ void mergeIntoFullName(Customer* customer, char* firstName, char* lastName)
 int initFullName(Customer* customer)
 {
     int res;
-    char* firstName, lastName;
-    size_t len;
-    res = initFirstName(firstName);
+    char* firstName;
+    char* lastName;
+    res = initFirstName(&firstName);
     if (!res)
         return 0;           //REMEMBER TO FREE()!!!!!
-    res = initLastName(lastName);
+    res = initLastName(&lastName);
     if (!res)
     {
         free(firstName);
