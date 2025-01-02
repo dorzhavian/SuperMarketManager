@@ -32,3 +32,17 @@ void freeSuperMarket(SuperMarket* superMarket);
 int uniqueBarcode(char* buffer, const SuperMarket* superMarket);
 
 void printAllCustomers(const SuperMarket* superMarket);
+
+//added2
+int isExistName(const char* customer, const SuperMarket* superMarket);
+
+int isExistID(const char* customer, const SuperMarket* superMarket);
+
+void InitAndAddCustomer(SuperMarket* superMarket);
+
+//addOrUpdateProductToSuperMarket();
+
+void updateProductQuantity(SuperMarket* superMarket);
+
+void addNewProduct(SuperMarket* superMarket);
+//till here

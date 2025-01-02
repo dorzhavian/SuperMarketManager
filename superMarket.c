@@ -7,15 +7,12 @@
 
 int initSuperMarket(SuperMarket* superMarket)
 {
-    
     if (superMarket == NULL) 
         return 0;
-
     printf("Enter market name: ");
     superMarket->superMarketName = getStrExactLength();
     if (superMarket->superMarketName == NULL)
         return 0;                                     //REMEMBER TO FREE()!!!!!!!!!!!!!
-
     superMarket->productsPointersArr = (Product**)malloc(sizeof(Product*)); 
     if (superMarket->productsPointersArr == NULL)
     {
@@ -29,14 +26,10 @@ int initSuperMarket(SuperMarket* superMarket)
         free(superMarket->productsPointersArr);         
         return 0;                                   // REMEMBER FREE() !!!!!!!!!!!!! 
     }
-
     superMarket->numOfProducts = 0;
     superMarket->numOfCustomers = 0;
-   
-
     return 1;
 }
-
 
 void printSuperMarket(const SuperMarket* superMarket)
 {
@@ -81,14 +74,51 @@ int addCustomer(SuperMarket* superMarket, const Customer* customer)
     return 1;
 }
 
-int buyAtTheSuperMarket()
+void InitAndAddCustomer(SuperMarket* superMarket)
 {
-    return 0;
+    Customer customer;
+    int res;
+    do {
+        initCustomer(&customer);
+        res = isExistID(customer.id, superMarket);
+        if (res)
+            printf("ID %s is not unique!\n", customer.id);
+    } while (res);
+    if (isExistName(customer.name, superMarket))
+    {
+        printf("This customer is already in market\nError adding customer\n");
+        return;
+    }
+    res = addCustomer(superMarket, &customer);
+    if (!res)
+        free(superMarket->customersArr);
 }
 
-void printAllProductsByType(SuperMarket* superMarket, Type type)
+void updateProductQuantity(SuperMarket* superMarket)
 {
+    char bcInput[MAX_LEN];
+    printf("Please enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
+    checkValidBarcodeInput(bcInput);
+    int index = isProductExistByBarcode(superMarket, bcInput);
+    if (index == -1)
+        printf("No such product barcode in the super market.\n");
+    else
+    {
+        printf("How many items you want to add to stock? ");
+        int addStock;
+        scanf("%d", &addStock);
+        superMarket->productsPointersArr[index]->quantity += addStock;
+        printf("Stock update Successfully!!\n");
+    }
+}
 
+void addNewProduct(SuperMarket* superMarket)
+{
+    int res = addProductToSuperMarket(superMarket);
+    if (!res)
+        free(superMarket->productsPointersArr);
+    else
+        printf("\nProduct Added Successfully!!!\n");
 }
 
 int isProductExistByBarcode(const SuperMarket* superMarket, char* bcInput)
@@ -101,14 +131,7 @@ int isProductExistByBarcode(const SuperMarket* superMarket, char* bcInput)
     return -1;
 }
 
-
-void freeSuperMarket(SuperMarket* superMarket)
-{
-
-}
-
-
-int uniqueBarcode(char* buffer, const SuperMarket* superMarket)				//added
+int uniqueBarcode(char* buffer, const SuperMarket* superMarket)	
 {
     for (size_t j = 0; j < superMarket->numOfProducts; j++)
     {
@@ -125,4 +148,43 @@ void printAllCustomers(const SuperMarket* superMarket)
     printf("\nThere are %d customers\n", superMarket->numOfCustomers);
     for (int i = 0; i < superMarket->numOfCustomers; i++)
         printCustomer(&((superMarket->customersArr)[i]));
+}
+
+int isExistName(const char* customerName, const SuperMarket* superMarket)
+{
+    for (int i = 0; i < superMarket->numOfCustomers; i++)
+    {
+        if (strcmp(customerName, superMarket->customersArr[i].name) == 0)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int isExistID(const char* customerID, const SuperMarket* superMarket)
+{
+    for (int i = 0; i < superMarket->numOfCustomers; i++)
+    {
+        if (strcmp(customerID, superMarket->customersArr[i].id) == 0)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void printAllProductsByType(SuperMarket* superMarket, Type type)
+{
+
+}
+
+int buyAtTheSuperMarket()
+{
+    return 0;
+}
+
+void freeSuperMarket(SuperMarket* superMarket)
+{
+
 }

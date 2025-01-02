@@ -74,56 +74,22 @@ void case0(SuperMarket* superMarket)
 	printSuperMarket(superMarket);
 }
 
+//move to superMarket ????
 void case1(SuperMarket* superMarket)
 {
+	//make method addOrUpdateProductToSuperMarket
 	char choice;
-	char bcInput[MAX_LEN];
 	printf("Adding new Product? y/Y : ");
 	scanf(" %c", &choice);
 	if (tolower(choice) == 'y')
-	{
-		int res = addProductToSuperMarket(superMarket);
-		if (!res)
-			free(superMarket->productsPointersArr);
-		else 
-			printf("\nProduct Added Successfully!!!\n");
-	}
+		addNewProduct(superMarket);
 	else
-	{
-		printf("Please enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
-		checkValidBarcodeInput(bcInput);
-		int index = isProductExistByBarcode(superMarket, bcInput);
-		if (index == -1) 
-			printf("No such product barcode in the super market.");
-		else 
-		{
-			printf("How many items you want to add to stock? ");
-			int addStock;
-			scanf("%d", &addStock);
-			superMarket->productsPointersArr[index]->quantity += addStock;
-			printf("Stock update Successfully!!\n");
-		}
-	}
+		updateProductQuantity(superMarket);
 }
 
 void case2(SuperMarket* superMarket)
 {
-	Customer customer;
-	int res;
-	do {
-		initCustomer(&customer);
-		res = isExistID(&customer.id, superMarket);
-		if (res)
-			printf("ID %s is not unique!", customer.id);
-	} while (res);
-	if (isExistName(&customer.name, superMarket))
-	{
-		printf("This customer is already in market\nError adding customer\n");
-		return;
-	}
-	res = addCustomer(superMarket, &customer);
-	if (!res)
-		free(superMarket->customersArr);
+	InitAndAddCustomer(superMarket);
 }
 
 int case3(SuperMarket* superMarket)
@@ -198,31 +164,7 @@ void case6(SuperMarket* superMarket)
 }
 
 
-int isExistName(const char* customerName, const SuperMarket* superMarket)
-{
-	for (int i = 0; i < superMarket->numOfCustomers; i++)
-	{
-		if (strcmp(customerName, superMarket->customersArr[i].name) == 0)
-		{
-			return 1;
-		}
-	}
-	return 0;
-}
-
-
-int isExistID(const char* customerID, const SuperMarket* superMarket)
-{
-	for (int i = 0; i < superMarket->numOfCustomers; i++)
-	{
-		if (strcmp(customerID, superMarket->customersArr[i].id) == 0)
-		{
-			return 1;
-		}
-	}
-	return 0;
-}
-
+//move to the supermarket???
 int whoIsShopping(SuperMarket* superMarket)
 {
 	char* choice;

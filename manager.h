@@ -1,7 +1,7 @@
 #pragma once
 
 #include "superMarket.h"
-#include "customer.h"
+//#include "customer.h"				after i moved the case2 to supermarket not needed
 #include "functions.h"
 
 void printMenu();
@@ -21,10 +21,6 @@ int case4(SuperMarket* superMarket);
 int case5(SuperMarket* superMarket);
 
 void case6(SuperMarket* superMarket);
-
-int isExistName(const char* customer, const SuperMarket* superMarket);
-
-int isExistID(const char* customer, const SuperMarket* superMarket);
 
 int whoIsShopping(SuperMarket* superMarket);
 

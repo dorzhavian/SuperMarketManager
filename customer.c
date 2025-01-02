@@ -11,7 +11,7 @@
 
 int initCustomer(Customer* customer) {
 	int res;
-	initName(customer);
+	initFullName(customer);
 	initId(customer);
 	res = initShoppingCart(&customer->cart);
 	if (!res) 
@@ -19,34 +19,9 @@ int initCustomer(Customer* customer) {
 	return res;
 }
 
-/*
-void initName(Customer* customer) 
+int initFirstName(char* firstName)
 {
-	char firstName[MAX_LEN];
-	char lastName[MAX_LEN];
-	printf("Enter first name: \n");
-	do {
-		myGets(firstName, MAX_LEN);
-	} while (!firstName);
-	printf("Enter last name: \n");
-	do {
-		myGets(lastName, MAX_LEN);
-	} while (!lastName);
-	fixNameStr(firstName);
-	fixNameStr(lastName);
-	strcpy(customer -> name, firstName);
-	strcat(customer -> name, " - ");
-	strcat(customer -> name, lastName);
-	strcat(customer -> name, "\0");
-}
-*/
-
-int initName(Customer* customer)
-{
-    char* firstName;
-    char* lastName;
     size_t len;
-
     printf("Enter first name: \n");
     do {
         firstName = getStrExactLength();
@@ -58,20 +33,50 @@ int initName(Customer* customer)
         if (len == 0)
             printf("Invalid input! Please try again.");
     } while (len == 0);
+    fixNameStr(firstName);
+    return 1;
+}
+
+int initLastName(char* lastName)
+{
+    size_t len;
     printf("Enter last name: \n");
     do {
         lastName = getStrExactLength();
         if (!lastName) {
             printf("Memory allocation failed.\n");
-            free(firstName);
             return 0;
         }
         len = strlen(lastName);
         if (len == 0)
             printf("Invalid input! Please try again.");
     } while (len == 0);
-    fixNameStr(firstName);
     fixNameStr(lastName);
+    return 1;
+}
+
+void mergeIntoFullName(Customer* customer, char* firstName, char* lastName)
+{
+    strcpy(customer->name, firstName);
+    strcat(customer->name, " - ");
+    strcat(customer->name, lastName);
+    strcat(customer->name, "\0");
+}
+
+int initFullName(Customer* customer)
+{
+    int res;
+    char* firstName, lastName;
+    size_t len;
+    res = initFirstName(firstName);
+    if (!res)
+        return 0;           //REMEMBER TO FREE()!!!!!
+    res = initLastName(lastName);
+    if (!res)
+    {
+        free(firstName);
+        return 0;
+    } 
     size_t fullNameLength = strlen(firstName) + strlen(lastName) + 4;
     customer->name = malloc(fullNameLength);
     if (customer->name == NULL) {
@@ -80,10 +85,7 @@ int initName(Customer* customer)
         free(firstName);
         return 0;
     }
-    strcpy(customer->name, firstName);
-    strcat(customer->name, " - ");
-    strcat(customer->name, lastName);
-    strcat(customer->name, "\0");
+    mergeIntoFullName(customer, firstName, lastName);
     free(lastName);
     free(firstName);
     // FREE() customer -> name remember !!!!!!
