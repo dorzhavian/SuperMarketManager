@@ -106,7 +106,7 @@ void case2(SuperMarket* superMarket)
 
 int case3(SuperMarket* superMarket)
 {
-	int res3;
+	int index;
 	if (superMarket->numOfCustomers == 0)
 	{
 		printf("No customer listed to market\n");
@@ -119,9 +119,12 @@ int case3(SuperMarket* superMarket)
 	}
 	else 
 	{
-		res3 = whoIsShopping(superMarket);
-		if (res3 == 0)
+		index = whoIsShopping(superMarket);
+		if (index == -1)
 			return 0;
+		
+
+
 	}
 	return 1;
 }
@@ -181,19 +184,21 @@ int whoIsShopping(SuperMarket* superMarket)
 {
 	char* choice;
 	printAllCustomers(superMarket);
-	printf("Doing shopping now!!!\nWho is shopping? Enter customer name or ID\n");
+	printf("Doing shopping now!!!\nWho is shopping? Enter customer ID\n");
 	choice = getStrExactLength();			//REMEMBER TO FREE()!!!!!!!!!!!!!!!!!
 	if (!choice)
 	{
-		return 0;
+		return -1;
 	}
-	int res1, res2;
-	res1 = isExistID(choice, superMarket);
-	res2 = isExistName(choice, superMarket);
-	if (!res1 && !res2)
+	int res;
+	res = isExistID(choice, superMarket);
+	if (!res)
 	{
-		printf("This customer not listed");
-		return 0;
+		printf("This customer not listed\n");
+		free(choice);
+		return -1;
 	}
-	return 1;
+	int index = findIndexOfCustomer(superMarket, choice);				//REMEMBER TO FREE()!!!!!!!!!!!!!!!!!
+	free(choice);
+	return index;
 }

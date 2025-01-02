@@ -83,11 +83,13 @@ void InitAndAddCustomer(SuperMarket* superMarket)
 
 void updateProductQuantity(SuperMarket* superMarket)
 {
+    //func start                
     char bcInput[MAX_LEN];
     printAllProducts(superMarket);
     printf("Please enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
     checkValidBarcodeInput(bcInput);
     int index = isProductExistByBarcode(superMarket, bcInput);
+    //func end
     if (index == -1)
         printf("No such product barcode in the super market.\n");
     else
@@ -195,4 +197,13 @@ int buyAtTheSuperMarket()
 void freeSuperMarket(SuperMarket* superMarket)
 {
 
+}
+
+int findIndexOfCustomer(const SuperMarket* superMarket,const char* ID)
+{
+    for (int i = 0; i < superMarket->numOfCustomers; i++)
+    {
+        if(strcmp(superMarket->customersArr[i].id, ID) == 0)
+            return i;
+    }
 }

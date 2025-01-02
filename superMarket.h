@@ -48,3 +48,5 @@ void updateProductQuantity(SuperMarket* superMarket);
 
 void addNewProduct(SuperMarket* superMarket);
 //till here
+
+int findIndexOfCustomer(const SuperMarket* superMarket,const char* ID);
