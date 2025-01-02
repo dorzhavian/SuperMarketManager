@@ -37,7 +37,9 @@ int start(SuperMarket* superMarket)
 			case0(superMarket);
 			break;
 		case 1:
-			case1(superMarket);
+			res = case1(superMarket);
+			if (res == 0)
+				printf("Error in adding product\n");
 			break;
 		case 2:
 			case2(superMarket);
@@ -75,7 +77,7 @@ void case0(SuperMarket* superMarket)
 }
 
 //move to superMarket ????
-void case1(SuperMarket* superMarket)
+int case1(SuperMarket* superMarket)
 {
 	//make method addOrUpdateProductToSuperMarket
 	char choice;
@@ -84,7 +86,17 @@ void case1(SuperMarket* superMarket)
 	if (tolower(choice) == 'y')
 		addNewProduct(superMarket);
 	else
-		updateProductQuantity(superMarket);
+	{
+		if (superMarket->numOfProducts == 0)
+			return 0;
+		printf("Do you want to increase the amout of an existing product? y/Y: ");
+		scanf(" %c", &choice);
+		if (tolower(choice) == 'y')
+			updateProductQuantity(superMarket);
+		else
+			return 1;
+	}
+	return 1;
 }
 
 void case2(SuperMarket* superMarket)

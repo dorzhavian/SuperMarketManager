@@ -10,7 +10,7 @@ int start(SuperMarket* superMarket);
 
 void case0(SuperMarket* superMarket);
 
-void case1(SuperMarket* superMarket);
+int case1(SuperMarket* superMarket);
 
 void case2(SuperMarket* superMarket);
 

@@ -15,6 +15,8 @@ typedef struct {
 
 int initSuperMarket(SuperMarket* superMarket);
 
+void printAllProducts(const SuperMarket* superMarket);
+
 void printSuperMarket(const SuperMarket* superMarket);
 
 int addProductToSuperMarket(SuperMarket* superMarket);

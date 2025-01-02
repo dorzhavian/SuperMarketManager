@@ -32,37 +32,23 @@ int initSuperMarket(SuperMarket* superMarket)
     return 1;
 }
 
-void printSuperMarket(const SuperMarket* superMarket)
+void printAllProducts(const SuperMarket* superMarket)
 {
-    printf("Super Market Name: %s \n", superMarket->superMarketName);
     printf("There are %d products\n", superMarket->numOfProducts);
     printf("%-20s %-20s %-20s %-10s %-20s %-15s\n",
         "Name", "Barcode", "Type", "Price", "Count In Stock", "Expiry Date");
     printf("--------------------------------------------------------------------------------------------------------\n");
     for (int i = 0; i < superMarket->numOfProducts; i++)
         printProduct((superMarket->productsPointersArr)[i]);
-    if (superMarket->numOfCustomers > 0)
-        printAllCustomers(superMarket);
+    printf("\n");
 }
 
-int addProductToSuperMarket(SuperMarket* superMarket)
+void printSuperMarket(const SuperMarket* superMarket)
 {
-    Product* pP = (Product*)malloc(sizeof(Product));          
-    if (!pP)  
-        return 0;           // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    superMarket->productsPointersArr = (Product**)safeRealloc(superMarket->productsPointersArr, (superMarket->numOfProducts + 1) * sizeof(Product*));
-    if (!superMarket->productsPointersArr)
-    {
-        free(pP);
-        return 0;          // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    }
-    initProduct(pP);
-    while (uniqueBarcode(pP->barCode, superMarket) == 0) {
-        generateAndAddRandomDigits(pP->barCode);
-    }
-    superMarket->productsPointersArr[superMarket->numOfProducts] = pP;
-    superMarket->numOfProducts++;
-    return 1;
+    printf("Super Market Name: %s \n", superMarket->superMarketName);
+    printAllProducts(superMarket);
+    if (superMarket->numOfCustomers > 0)
+        printAllCustomers(superMarket);
 }
 
 int addCustomer(SuperMarket* superMarket, const Customer* customer)
@@ -98,6 +84,7 @@ void InitAndAddCustomer(SuperMarket* superMarket)
 void updateProductQuantity(SuperMarket* superMarket)
 {
     char bcInput[MAX_LEN];
+    printAllProducts(superMarket);
     printf("Please enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
     checkValidBarcodeInput(bcInput);
     int index = isProductExistByBarcode(superMarket, bcInput);
@@ -120,6 +107,26 @@ void addNewProduct(SuperMarket* superMarket)
         free(superMarket->productsPointersArr);
     else
         printf("\nProduct Added Successfully!!!\n");
+}
+
+int addProductToSuperMarket(SuperMarket* superMarket)
+{
+    Product* pP = (Product*)malloc(sizeof(Product));
+    if (!pP)
+        return 0;           // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    superMarket->productsPointersArr = (Product**)safeRealloc(superMarket->productsPointersArr, (superMarket->numOfProducts + 1) * sizeof(Product*));
+    if (!superMarket->productsPointersArr)
+    {
+        free(pP);
+        return 0;          // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
+    initProduct(pP);
+    while (uniqueBarcode(pP->barCode, superMarket) == 0) {
+        generateAndAddRandomDigits(pP->barCode);
+    }
+    superMarket->productsPointersArr[superMarket->numOfProducts] = pP;
+    superMarket->numOfProducts++;
+    return 1;
 }
 
 int isProductExistByBarcode(const SuperMarket* superMarket, char* bcInput)
