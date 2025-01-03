@@ -96,12 +96,14 @@ void updateProductQuantity(SuperMarket* superMarket)
     }
 }
 
+//maybe not neccessery
 void addNewProduct(SuperMarket* superMarket)
 {
     int res = addProductToSuperMarket(superMarket);
-    if (!res)
-        free(superMarket->productsPointersArr);
-    else
+    //if (!res)
+    // 
+        //free(superMarket->productsPointersArr);
+    //else
         printf("\nProduct Added Successfully!!!\n");
 }
 

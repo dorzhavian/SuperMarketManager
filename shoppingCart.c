@@ -12,7 +12,7 @@ int initShoppingCart(ShoppingCart* shoppingCart)
     if (shoppingCart == NULL)
         return 0;
     shoppingCart->shoppingItemsArr = (ShoppingItem**)malloc(sizeof(ShoppingItem*));
-    if (shoppingCart->shoppingItemsArr == NULL)
+    if (!shoppingCart->shoppingItemsArr)
         return 0;                             // REMEMBER TO FREE ()!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     shoppingCart-> numOfSInCart = 0;
     return 1;
@@ -20,9 +20,16 @@ int initShoppingCart(ShoppingCart* shoppingCart)
 
 void printShoppingCart(const ShoppingCart* shoppingCart)
 {
-    for (size_t i = 0; i < shoppingCart->numOfSInCart; i++)
+    if (shoppingCart->numOfSInCart == 0)
+        printf("Cart is empty\n");
+    else 
     {
-        printShoppingItem(shoppingCart->shoppingItemsArr[i]);
+        float check = calcOfTotalPay(shoppingCart);
+        for (size_t i = 0; i < shoppingCart->numOfSInCart; i++)
+        {
+            printShoppingItem(shoppingCart->shoppingItemsArr[i]);
+        }
+        printf("Total bill to pay: %.2f", check);
     }
 }
 
@@ -31,7 +38,7 @@ float calcOfTotalPay(const ShoppingCart* shoppingCart)
     float check = 0;
     for (size_t i = 0; i < shoppingCart->numOfSInCart; i++)
     {
-        check += (shoppingCart->shoppingItemsArr[i]->price);
+        check += ((shoppingCart->shoppingItemsArr[i]->price) * (shoppingCart->shoppingItemsArr[i]->quantity));
     }
     return check;
 }
@@ -55,9 +62,30 @@ int addShoppingItemToCart(ShoppingCart* shoppingCart, Product* product)
     createShoppingItem(product, pS);
     pS->quantity = num;
     shoppingCart->shoppingItemsArr[shoppingCart->numOfSInCart] = pS;
-    shoppingCart-> numOfSInCart += num;
+    shoppingCart-> numOfSInCart++;
     product->quantity -= num;
     return 1;
+}
+
+void updateShoppingItemQuantityInCart(ShoppingCart* shoppingCart, Product* product, size_t index)
+{
+    int num;
+    do {
+        printf("How many items do you want? max %d", product->quantity);
+        scanf("%d", &num);
+    } while (num < 1 || num > product->quantity);
+    shoppingCart->shoppingItemsArr[index]->quantity += num;
+    product->quantity -= num;
+}
+
+size_t itemIndexInCart(const ShoppingCart* shoppingCart,const char* barcode)
+{
+    for (size_t i = 0; i < shoppingCart->numOfSInCart; i++)
+    {
+        if (strcmp(shoppingCart->shoppingItemsArr[i]->barCode , barcode) == 0)
+            return i;
+    }
+    return -1;
 }
 
 void freeShoppingCart(ShoppingCart* shoppingCart)

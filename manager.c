@@ -81,7 +81,7 @@ int case1(SuperMarket* superMarket)
 {
 	//make method addOrUpdateProductToSuperMarket
 	char choice;
-	printf("Adding new Product? y/Y : ");
+	printf("Adding new Product? y/Y : \n");
 	scanf(" %c", &choice);
 	if (tolower(choice) == 'y')
 		addNewProduct(superMarket);
@@ -89,7 +89,7 @@ int case1(SuperMarket* superMarket)
 	{
 		if (superMarket->numOfProducts == 0)
 			return 0;
-		printf("Do you want to increase the amout of an existing product? y/Y: ");
+		printf("Do you want to increase the amout of an existing product? y/Y: \n");
 		scanf(" %c", &choice);
 		if (tolower(choice) == 'y')
 			updateProductQuantity(superMarket);
@@ -106,7 +106,7 @@ void case2(SuperMarket* superMarket)
 
 int case3(SuperMarket* superMarket)
 {
-	int indexCustomer, indexProduct,res3 ;
+	size_t indexCustomer, indexProduct, res3;
 	char choice;
 	if (superMarket->numOfCustomers == 0)
 	{
@@ -120,27 +120,32 @@ int case3(SuperMarket* superMarket)
 	}
 	else 
 	{
-		indexCustomer = whoIsShopping(superMarket);
+		indexCustomer = indexWhoIsShopping(superMarket);
 		if (indexCustomer == -1)
 			return 0;
 		printAllProducts(superMarket);
 		while (1)
 		{
-			printf("Do you want to shop for a product? y/Y, anything else to exit!");
+			printf("Do you want to shop for a product? y/Y, anything else to exit!\n");
 			scanf(" %c", &choice);
 			if (tolower(choice) != 'y')
 			{
-				printf("---------- Shopping ended ----------");
+				printf("---------- Shopping ended ----------\n");
 				break;
 			}
 			indexProduct = productIndexByBarcode(superMarket);
 			if (indexProduct != -1)
 			{
-				res3 = addShoppingItemToCart(&(superMarket->customersArr[indexCustomer].cart), superMarket->productsPointersArr[indexProduct]);
-				if (!res3)
+				res3 = itemIndexInCart(&(superMarket->customersArr[indexCustomer].cart), superMarket->productsPointersArr[indexProduct]->barCode);
+				if (res3 != -1)
 				{
-					free((superMarket->customersArr[indexCustomer].cart.shoppingItemsArr));
-					return 0;
+					updateShoppingItemQuantityInCart(&(superMarket->customersArr[indexCustomer].cart), superMarket->productsPointersArr[indexProduct], res3);
+				}
+				else
+				{
+					res3 = addShoppingItemToCart(&(superMarket->customersArr[indexCustomer].cart), superMarket->productsPointersArr[indexProduct]);
+					if (!res3)
+						return 0;
 				}
 			}
 		}
@@ -163,9 +168,12 @@ int case4(SuperMarket* superMarket)
 	}
 	else
 	{
-		res4 = whoIsShopping(superMarket);
-		if (res4 == 0)
+		//printAllCustomers(superMarket);
+		res4 = indexWhoIsShopping(superMarket);
+		if (res4 == -1)
 			return 0;
+		else
+			printShoppingCart(&(superMarket->customersArr[res4].cart));
 	}
 	return 1;
 }
@@ -185,8 +193,8 @@ int case5(SuperMarket* superMarket)
 	}
 	else
 	{
-		res5 = whoIsShopping(superMarket);
-		if (res5 == 0)
+		res5 = indexWhoIsShopping(superMarket);
+		if (res5 == -1)
 			return 0;
 	}
 	return 1;
@@ -199,7 +207,7 @@ void case6(SuperMarket* superMarket)
 
 
 //move to the supermarket???
-int whoIsShopping(SuperMarket* superMarket)
+int indexWhoIsShopping(SuperMarket* superMarket)
 {
 	char* choice;
 	printAllCustomers(superMarket);

@@ -14,7 +14,8 @@ int initCustomer(Customer* customer) {
 	initFullName(customer);
 	initId(customer);
 	res = initShoppingCart(&customer->cart);
-	if (!res) 
+	//why????
+    if (!res) 
 		free(&customer->cart);
 	return res;
 }
@@ -110,7 +111,7 @@ void initId(Customer* customer)
 
 
 void printCustomer(const Customer* customer) {
-	printf("Customer Details:\n");
+	printf("\nCustomer Details:\n");
 	printf("-----------------\n");
 	printf("Name: %s\n", customer->name);
 	printf("Id: %s\n", customer->id);

@@ -16,5 +16,5 @@ int initShoppingItem(Product* p)
 
 void printShoppingItem(const ShoppingItem* shoppingItem)
 {
-
+    printf("Item %s count %d price %.2f per item\n", shoppingItem->barCode, shoppingItem->quantity, shoppingItem->price);
 }

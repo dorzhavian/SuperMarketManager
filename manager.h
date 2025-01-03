@@ -22,6 +22,6 @@ int case5(SuperMarket* superMarket);
 
 void case6(SuperMarket* superMarket);
 
-int whoIsShopping(SuperMarket* superMarket);
+int indexWhoIsShopping(SuperMarket* superMarket);
 
 
