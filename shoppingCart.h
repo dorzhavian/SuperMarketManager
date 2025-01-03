@@ -10,5 +10,5 @@ typedef struct {
 int initShoppingCart(ShoppingCart* shoppingCart);
 void printShoppingCart(const ShoppingCart* shoppingCart);
 int calcOfTotalPay(const ShoppingCart* shoppingCart); 
-void addProductToCart(ShoppingCart* shoppingCart, ShoppingItem* shoppingItem);
-void freeShoppingCart();
+int addShoppingItemToCart(ShoppingCart* shoppingCart, const ShoppingItem* shoppingItem);
+void freeShoppingCart(ShoppingCart* shoppingCart);

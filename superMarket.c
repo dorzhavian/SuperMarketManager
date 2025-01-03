@@ -128,6 +128,7 @@ int addProductToSuperMarket(SuperMarket* superMarket)
     }
     superMarket->productsPointersArr[superMarket->numOfProducts] = pP;
     superMarket->numOfProducts++;
+    free(pP);
     return 1;
 }
 

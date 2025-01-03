@@ -70,7 +70,7 @@ int initFullName(Customer* customer)
     char* lastName;
     res = initFirstName(&firstName);
     if (!res)
-        return 0;           //REMEMBER TO FREE()!!!!!
+        return 0;           //REMEMBER TO FREE()!!!!!//
     res = initLastName(&lastName);
     if (!res)
     {
@@ -119,5 +119,5 @@ void printCustomer(const Customer* customer) {
 
 void freeCustomer(Customer* customer)
 {
-
+    free(customer->name);
 }
