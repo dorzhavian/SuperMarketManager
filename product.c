@@ -17,6 +17,7 @@ void initProduct(Product* product)//, SuperMarket* superMarket)
 	
 	strcpy(product -> barCode, preFixTypes[product->theType]);
 	generateAndAddRandomDigits(product->barCode);
+
 	printf("Please enter price: \n");
 	do {
 		scanf("%f", &product->price);

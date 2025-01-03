@@ -83,13 +83,7 @@ void InitAndAddCustomer(SuperMarket* superMarket)
 
 void updateProductQuantity(SuperMarket* superMarket)
 {
-    //func start                
-    char bcInput[MAX_LEN];
-    printAllProducts(superMarket);
-    printf("Please enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
-    checkValidBarcodeInput(bcInput);
-    int index = isProductExistByBarcode(superMarket, bcInput);
-    //func end
+    int index = productIndexByBarcode(superMarket);
     if (index == -1)
         printf("No such product barcode in the super market.\n");
     else
@@ -128,18 +122,26 @@ int addProductToSuperMarket(SuperMarket* superMarket)
     }
     superMarket->productsPointersArr[superMarket->numOfProducts] = pP;
     superMarket->numOfProducts++;
-    free(pP);
     return 1;
 }
 
-int isProductExistByBarcode(const SuperMarket* superMarket, char* bcInput)
+int productIndexByBarcode(SuperMarket* superMarket)
+{
+    char bcInput[MAX_LEN];
+    printAllProducts(superMarket);
+    printf("Please enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
+    checkValidBarcodeInput(bcInput);
+    return findBarcode(superMarket, bcInput);
+}
+
+int findBarcode(const SuperMarket* superMarket, char* bcInput)
 {
     for (int i = 0; i < superMarket->numOfProducts; i++)
     {
         if (strcmp(bcInput, superMarket->productsPointersArr[i]->barCode) == 0)
             return i;
     }
-    return -1;
+    return -1;    // if not found return -1
 }
 
 int uniqueBarcode(char* buffer, const SuperMarket* superMarket)	
@@ -207,4 +209,5 @@ int findIndexOfCustomer(const SuperMarket* superMarket,const char* ID)
         if(strcmp(superMarket->customersArr[i].id, ID) == 0)
             return i;
     }
+    return -1;
 }

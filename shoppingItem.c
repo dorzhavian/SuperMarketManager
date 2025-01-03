@@ -1,9 +1,16 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "shoppingItem.h"
 
-int initShoppingItem(ShoppingItem* shoppingItem)
+void createShoppingItem(Product* product,ShoppingItem* shoppingItem)
 {
-    shoppingItem->amount = 0;
+    strcpy(shoppingItem->barCode, product->barCode);
+    shoppingItem->price = product->price;
+    shoppingItem->quantity = 0;
+}
 
+int initShoppingItem(Product* p)
+{
     return 0;
 }
 

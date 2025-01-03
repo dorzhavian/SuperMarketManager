@@ -27,13 +27,15 @@ int buyAtTheSuperMarket();
 
 void printAllProductsByType(SuperMarket* superMarket, Type type);
 
-int isProductExistByBarcode(const SuperMarket* superMarket, char* bcInput);
+int findBarcode(const SuperMarket* superMarket, char* bcInput);
 
 void freeSuperMarket(SuperMarket* superMarket);
 
 int uniqueBarcode(char* buffer, const SuperMarket* superMarket);
 
 void printAllCustomers(const SuperMarket* superMarket);
+
+int productIndexByBarcode(SuperMarket* superMarket);
 
 //added2
 int isExistName(const char* customer, const SuperMarket* superMarket);

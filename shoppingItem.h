@@ -1,16 +1,16 @@
 #pragma once
 
+#include <string.h>
 #include "product.h"
 
 typedef struct {
 
 	char barCode[BC_LEN];
 	float price;
-	int amount;
-
-	//Product p ???
+	int quantity;
 
 } ShoppingItem;
 
-int initShoppingItem(ShoppingItem* shoppingItem);                        // convert product to shoppingItem for adding to shoppingCart
+void createShoppingItem(Product* product, ShoppingItem* shoppingItem); // convert product to shoppingItem for adding to shoppingCart
+int initShoppingItem(Product* p);
 void printShoppingItem(const ShoppingItem* shoppingItem);

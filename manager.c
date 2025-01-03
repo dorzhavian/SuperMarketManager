@@ -106,7 +106,8 @@ void case2(SuperMarket* superMarket)
 
 int case3(SuperMarket* superMarket)
 {
-	int index;
+	int indexCustomer, indexProduct,res3 ;
+	char choice;
 	if (superMarket->numOfCustomers == 0)
 	{
 		printf("No customer listed to market\n");
@@ -115,18 +116,36 @@ int case3(SuperMarket* superMarket)
 	else if(superMarket->numOfProducts == 0)
 	{
 		printf("No products in market - cannot shop!\n");
-		
+		return 0;
 	}
 	else 
 	{
-		index = whoIsShopping(superMarket);
-		if (index == -1)
+		indexCustomer = whoIsShopping(superMarket);
+		if (indexCustomer == -1)
 			return 0;
-		
-
-
+		printAllProducts(superMarket);
+		while (1)
+		{
+			printf("Do you want to shop for a product? y/Y, anything else to exit!");
+			scanf(" %c", &choice);
+			if (tolower(choice) != 'y')
+			{
+				printf("---------- Shopping ended ----------");
+				break;
+			}
+			indexProduct = productIndexByBarcode(superMarket);
+			if (indexProduct != -1)
+			{
+				res3 = addShoppingItemToCart(&(superMarket->customersArr[indexCustomer].cart), superMarket->productsPointersArr[indexProduct]);
+				if (!res3)
+				{
+					free((superMarket->customersArr[indexCustomer].cart.shoppingItemsArr));
+					return 0;
+				}
+			}
+		}
+		return 1;
 	}
-	return 1;
 }
 
 int case4(SuperMarket* superMarket)
