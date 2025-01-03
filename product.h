@@ -8,7 +8,7 @@
 #define MAX_LEN 255
 
 typedef enum { eFruitVegtable, eFridge, eFrozen, eShelf, NofTypes } Type;
-static const char* types[NofTypes] = { "Fruit Vegtable", "Fridge","Frozen" , "Shelf"};
+static const char* types[NofTypes] = {"Fruit Vegtable", "Fridge", "Frozen" , "Shelf"};
 static const char* preFixTypes[NofTypes] = { "FV", "FR","FZ", "SH"};
 
 

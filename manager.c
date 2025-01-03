@@ -29,7 +29,7 @@ int start(SuperMarket* superMarket)
 	do {
 	
 		printMenu();
-		printf("\nEnter your choice: \n");
+		printf("\nEnter your choice: ");
 		scanf("%d", &choice);
 		switch (choice)
 		{
@@ -39,7 +39,7 @@ int start(SuperMarket* superMarket)
 		case 1:
 			res = case1(superMarket);
 			if (res == 0)
-				printf("Error in adding product\n");
+				printf("\nError in adding product\n");
 			break;
 		case 2:
 			case2(superMarket);
@@ -58,7 +58,7 @@ int start(SuperMarket* superMarket)
 				printf("Error in shoppingCart managment\n");
 			break;
 		case 6:
-			case6(superMarket);
+			printAllProductsByType(superMarket);
 			break;
 		case -1:
 			printf("Bye Bye");
@@ -81,7 +81,7 @@ int case1(SuperMarket* superMarket)
 {
 	//make method addOrUpdateProductToSuperMarket
 	char choice;
-	printf("Adding new Product? y/Y : \n");
+	printf("Adding new Product? y/Y : ");
 	scanf(" %c", &choice);
 	if (tolower(choice) == 'y')
 		addNewProduct(superMarket);
@@ -89,10 +89,13 @@ int case1(SuperMarket* superMarket)
 	{
 		if (superMarket->numOfProducts == 0)
 			return 0;
-		printf("Do you want to increase the amout of an existing product? y/Y: \n");
+		printf("\nDo you want to increase the amout of an existing product? y/Y: ");
 		scanf(" %c", &choice);
 		if (tolower(choice) == 'y')
+		{
+			printAllProducts(superMarket);
 			updateProductQuantity(superMarket);
+		}
 		else
 			return 1;
 	}
@@ -126,7 +129,7 @@ int case3(SuperMarket* superMarket)
 		printAllProducts(superMarket);
 		while (1)
 		{
-			printf("Do you want to shop for a product? y/Y, anything else to exit!\n");
+			printf("Do you want to shop for a product? y/Y, anything else to exit!");
 			scanf(" %c", &choice);
 			if (tolower(choice) != 'y')
 			{
@@ -162,10 +165,7 @@ int case4(SuperMarket* superMarket)
 		return 0;
 	}
 	else if (superMarket->numOfProducts == 0)
-	{
 		printf("No products in market - cannot shop!\n");
-
-	}
 	else
 	{
 		//printAllCustomers(superMarket);
@@ -179,8 +179,8 @@ int case4(SuperMarket* superMarket)
 }
 
 int case5(SuperMarket* superMarket)
-{
-	int res5;
+{ 
+	int res5, customerIndex;    // maybe change index to size_t , also at int indexWhoIsShopping(SuperMarket* superMarket)
 	if (superMarket->numOfCustomers == 0)
 	{
 		printf("No customer listed to market\n");
@@ -193,25 +193,28 @@ int case5(SuperMarket* superMarket)
 	}
 	else
 	{
-		res5 = indexWhoIsShopping(superMarket);
-		if (res5 == -1)
+		customerIndex = indexWhoIsShopping(superMarket);
+		if (customerIndex == -1)
 			return 0;
+		else if (superMarket->customersArr[customerIndex].cart.numOfSInCart == 0)
+		{
+			printf("\nCustomer cart is empty!\n");
+			return 0;
+		}
+		else 
+		{
+			res5 = buyAtTheSuperMarket(superMarket, customerIndex);
+		}
 	}
 	return 1;
 }
-
-void case6(SuperMarket* superMarket)
-{
-	return;
-}
-
 
 //move to the supermarket???
 int indexWhoIsShopping(SuperMarket* superMarket)
 {
 	char* choice;
 	printAllCustomers(superMarket);
-	printf("Doing shopping now!!!\nWho is shopping? Enter customer ID\n");
+	printf("\nWho is shopping? Enter customer ID\n");
 	choice = getStrExactLength();			//REMEMBER TO FREE()!!!!!!!!!!!!!!!!!
 	if (!choice)
 	{
@@ -221,7 +224,7 @@ int indexWhoIsShopping(SuperMarket* superMarket)
 	res = isExistID(choice, superMarket);
 	if (!res)
 	{
-		printf("This customer not listed\n");
+		printf("\nThis customer not listed\n");
 		free(choice);
 		return -1;
 	}

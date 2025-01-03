@@ -34,7 +34,7 @@ int initSuperMarket(SuperMarket* superMarket)
 
 void printAllProducts(const SuperMarket* superMarket)
 {
-    printf("There are %d products\n", superMarket->numOfProducts);
+    printf("\nThere are %d products\n", superMarket->numOfProducts);
     printf("%-20s %-20s %-20s %-10s %-20s %-15s\n",
         "Name", "Barcode", "Type", "Price", "Count In Stock", "Expiry Date");
     printf("--------------------------------------------------------------------------------------------------------\n");
@@ -43,9 +43,9 @@ void printAllProducts(const SuperMarket* superMarket)
     printf("\n");
 }
 
-void printSuperMarket(const SuperMarket* superMarket)
+void printSuperMarket(SuperMarket* superMarket)
 {
-    printf("Super Market Name: %s \n", superMarket->superMarketName);
+    printf("\nSuper Market Name: %s \n", superMarket->superMarketName);
     printAllProducts(superMarket);
     if (superMarket->numOfCustomers > 0)
         printAllCustomers(superMarket);
@@ -79,6 +79,7 @@ void InitAndAddCustomer(SuperMarket* superMarket)
     res = addCustomer(superMarket, &customer);
     if (!res)
         free(superMarket->customersArr);
+    printf("Customer added Successfully!!\n");
 }
 
 void updateProductQuantity(SuperMarket* superMarket)
@@ -130,8 +131,7 @@ int addProductToSuperMarket(SuperMarket* superMarket)
 int productIndexByBarcode(SuperMarket* superMarket)
 {
     char bcInput[MAX_LEN];
-    printAllProducts(superMarket);
-    printf("Please enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
+    printf("\nPlease enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
     checkValidBarcodeInput(bcInput);
     return findBarcode(superMarket, bcInput);
 }
@@ -158,9 +158,9 @@ int uniqueBarcode(char* buffer, const SuperMarket* superMarket)
     return 1;
 }
 
-void printAllCustomers(const SuperMarket* superMarket)
+void printAllCustomers(SuperMarket* superMarket)
 {
-    printf("\nThere are %d customers\n", superMarket->numOfCustomers);
+    printf("\nThere are %d customers.\nCustomers Details:\n-----------------\n", superMarket->numOfCustomers);
     for (int i = 0; i < superMarket->numOfCustomers; i++)
         printCustomer(&((superMarket->customersArr)[i]));
 }
@@ -189,14 +189,25 @@ int isExistID(const char* customerID, const SuperMarket* superMarket)
     return 0;
 }
 
-void printAllProductsByType(SuperMarket* superMarket, Type type)
+int buyAtTheSuperMarket(SuperMarket* superMarket, int customerIndex)
 {
-
-}
-
-int buyAtTheSuperMarket()
-{
-    return 0;
+    char choice;
+    printShoppingCart(&superMarket->customersArr[customerIndex].cart);
+    printf("Do you want to pay for this cart? y/Y, anything else to cancel shopping!\n");
+    scanf(" %c", &choice);
+    if (tolower(choice) != 'y')
+    {
+        /// CREATE METHODS THAT FREE THE WHOLE CART, UPDATE THE QUANTITY OF THE ORIGINAL PRODUCTS AT SUPER AND INITSHOPPINGCART!!!!!! , IF THIS METHOD USE MALLOC STAY INT IF NOT VOID!!!!!!
+        printf("!!! --- PURCHASE WAS CANCELED --- !!!\n");
+    }
+    else
+    {
+        printf("-----------------Cart info and bill for %s -----------------", superMarket->customersArr[customerIndex].name);
+        printShoppingCart(&superMarket->customersArr[customerIndex].cart);
+        printf("!!! --- PAYMENT RECIVED --- !!!\n");
+        /// JUST INITSHOPPINGCART HERE FOR THIS CUSTOMER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
+    return 1;
 }
 
 void freeSuperMarket(SuperMarket* superMarket)
@@ -212,4 +223,31 @@ int findIndexOfCustomer(const SuperMarket* superMarket,const char* ID)
             return i;
     }
     return -1;
+}
+
+
+void printAllProductsByType(SuperMarket* superMarket)
+{
+    if (superMarket->numOfProducts == 0)
+    {
+        printf("No products in market!\n");
+        return;
+    }
+    Type type = getProductType();
+    size_t i;
+    for (i = 0; i < superMarket->numOfProducts && superMarket->productsPointersArr[i]->theType != type; i++);     // fast for - check if exist products of the current type
+    if (i == superMarket->numOfProducts)
+    {
+        printf("\nThere are no product of type %s in market %s\n", types[type], superMarket->superMarketName);
+        return;
+    }
+    else {
+
+        printf("\nAll products of type %s:\n---------------------------\n", types[type]);
+        for (i = 0; i < superMarket->numOfProducts; i++)
+        {
+            if (superMarket->productsPointersArr[i]->theType == type)
+                printProduct(superMarket->productsPointersArr[i]);
+        }
+    }
 }

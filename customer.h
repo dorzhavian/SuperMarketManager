@@ -17,7 +17,7 @@ typedef struct {
 
 int initCustomer(Customer* customer);
 
-void printCustomer(const Customer* customer);
+void printCustomer(Customer* customer);
 
 void initId(Customer* customer);
 

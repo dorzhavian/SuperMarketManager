@@ -18,6 +18,15 @@ void initProduct(Product* product)//, SuperMarket* superMarket)
 	strcpy(product -> barCode, preFixTypes[product->theType]);
 	generateAndAddRandomDigits(product->barCode);
 
+	int res;
+	do {
+		res = initDate(&product->expierdDate);
+		if (res == -1)
+			printf("Date is not valid!\n");
+		if (res == 0)
+			printf("Invalid date format. Must be 8 digits.\n");
+	} while (res != 1);
+
 	printf("Please enter price: \n");
 	do {
 		scanf("%f", &product->price);
@@ -27,15 +36,6 @@ void initProduct(Product* product)//, SuperMarket* superMarket)
 	do {
 		scanf("%d", &product->quantity);
 	} while (product->quantity <= 0);
-
-	int res;
-	do {
-		res = initDate(&product->expierdDate);
-		if(res == -1)
-			printf("Date is not valid!\n");
-		if(res == 0)
-			printf("Invalid date format. Must be 8 digits.\n");
-	} while(res != 1);
 }
 
 

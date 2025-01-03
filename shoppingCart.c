@@ -18,7 +18,7 @@ int initShoppingCart(ShoppingCart* shoppingCart)
     return 1;
 }
 
-void printShoppingCart(const ShoppingCart* shoppingCart)
+void printShoppingCart(ShoppingCart* shoppingCart)
 {
     if (shoppingCart->numOfSInCart == 0)
         printf("Cart is empty\n");
@@ -29,7 +29,7 @@ void printShoppingCart(const ShoppingCart* shoppingCart)
         {
             printShoppingItem(shoppingCart->shoppingItemsArr[i]);
         }
-        printf("Total bill to pay: %.2f", check);
+        printf("Total bill to pay: %.2f\n\n", check);
     }
 }
 
@@ -56,7 +56,7 @@ int addShoppingItemToCart(ShoppingCart* shoppingCart, Product* product)
         return 0;          // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
     do {
-        printf("How many items do you want? max %d", product->quantity);
+        printf("How many items do you want? max %d\n", product->quantity);
         scanf("%d", &num);
     } while (num < 1 || num > product->quantity);
     createShoppingItem(product, pS);

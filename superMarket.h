@@ -17,15 +17,13 @@ int initSuperMarket(SuperMarket* superMarket);
 
 void printAllProducts(const SuperMarket* superMarket);
 
-void printSuperMarket(const SuperMarket* superMarket);
+void printSuperMarket(SuperMarket* superMarket);
 
 int addProductToSuperMarket(SuperMarket* superMarket);
 
 int addCustomer(SuperMarket* superMarket, const Customer* customer);
 
-int buyAtTheSuperMarket();
-
-void printAllProductsByType(SuperMarket* superMarket, Type type);
+int buyAtTheSuperMarket(SuperMarket* superMarket, int customerIndex);
 
 int findBarcode(const SuperMarket* superMarket, char* bcInput);
 
@@ -33,7 +31,7 @@ void freeSuperMarket(SuperMarket* superMarket);
 
 int uniqueBarcode(char* buffer, const SuperMarket* superMarket);
 
-void printAllCustomers(const SuperMarket* superMarket);
+void printAllCustomers(SuperMarket* superMarket);
 
 int productIndexByBarcode(SuperMarket* superMarket);
 
@@ -52,3 +50,8 @@ void addNewProduct(SuperMarket* superMarket);
 //till here
 
 int findIndexOfCustomer(const SuperMarket* superMarket,const char* ID);
+
+//case 6:
+
+void printAllProductsByType(SuperMarket* superMarket);
+

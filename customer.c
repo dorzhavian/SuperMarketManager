@@ -27,7 +27,7 @@ int initFirstName(char** firstName)             //Call by reference
     do {
         *firstName = getStrExactLength();
         if (!(*firstName)) {
-            printf("Memory allocation failed.\n");
+            //printf("Memory allocation failed.\n");
             return 0;
         }
         len = strlen(*firstName);
@@ -81,7 +81,7 @@ int initFullName(Customer* customer)
     size_t fullNameLength = strlen(firstName) + strlen(lastName) + 4;
     customer->name = malloc(fullNameLength);
     if (customer->name == NULL) {
-        printf("Memory allocation failed.\n");
+        //printf("Memory allocation failed.\n");
         free(lastName);
         free(firstName);
         return 0;
@@ -110,12 +110,14 @@ void initId(Customer* customer)
 }
 
 
-void printCustomer(const Customer* customer) {
-	printf("\nCustomer Details:\n");
-	printf("-----------------\n");
+void printCustomer(Customer* customer) {
 	printf("Name: %s\n", customer->name);
 	printf("Id: %s\n", customer->id);
-	//to add also cart
+    if (customer->cart.numOfSInCart == 0)
+        printf("Shopping cart is empty!\n\n");
+    else {
+        printShoppingCart(&customer->cart);
+    }
 }
 
 void freeCustomer(Customer* customer)
