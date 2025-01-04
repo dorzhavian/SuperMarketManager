@@ -29,14 +29,14 @@ int isExistID(const char* customer, const SuperMarket* superMarket);
 void printAllCustomers(SuperMarket* superMarket);
 
 //barcodes
-int findBarcode(const SuperMarket* superMarket, char* bcInput);
+size_t findBarcode(const SuperMarket* superMarket, char* bcInput);
 
 int uniqueBarcode(char* buffer, const SuperMarket* superMarket);
 
-int productIndexByBarcode(SuperMarket* superMarket);
+size_t productIndexByBarcode(SuperMarket* superMarket);
 
 //moved from manager
-int indexWhoIsShopping(SuperMarket* superMarket);
+size_t indexWhoIsShopping(SuperMarket* superMarket);
 
 //case 1:
 void updateProductQuantity(SuperMarket* superMarket);
@@ -45,7 +45,7 @@ int addProductToSuperMarket(SuperMarket* superMarket);
 
 void addNewProduct(SuperMarket* superMarket);
 
-int findIndexOfCustomer(const SuperMarket* superMarket, const char* ID);
+size_t findIndexOfCustomer(const SuperMarket* superMarket, const char* ID);
 
 //case 2:
 void InitAndAddCustomer(SuperMarket* superMarket);
@@ -58,7 +58,9 @@ int addOrUpdateShoppingCart(SuperMarket* superMarket, size_t indexProduct, size_
 int shopping(SuperMarket* superMarket, size_t indexCustomer);
 
 //case 5:
-int buyAtTheSuperMarket(SuperMarket* superMarket, int customerIndex);
+int buyAtTheSuperMarket(SuperMarket* superMarket, size_t customerIndex);
+
+void purchaseCanceled(SuperMarket* superMarket, size_t customerIndex);
 
 //case 6:
 void printAllProductsByType(SuperMarket* superMarket);

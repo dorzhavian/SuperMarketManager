@@ -113,11 +113,13 @@ void initId(Customer* customer)
 void printCustomer(Customer* customer) {
 	printf("Name: %s\n", customer->name);
 	printf("Id: %s\n", customer->id);
+    /*
     if (customer->cart.numOfSInCart == 0)
         printf("Shopping cart is empty!\n\n");
     else {
         printShoppingCart(&customer->cart);
     }
+    */
 }
 
 void freeCustomer(Customer* customer)

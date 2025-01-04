@@ -124,7 +124,7 @@ int case3(SuperMarket* superMarket)
 
 int case4(SuperMarket* superMarket)
 {
-	int res4;
+	size_t res4;
 	if (superMarket->numOfCustomers == 0)
 	{
 		printf("No customer listed to market\n");
@@ -146,7 +146,7 @@ int case4(SuperMarket* superMarket)
 
 int case5(SuperMarket* superMarket)
 { 
-	int res5, customerIndex;    // maybe change index to size_t , also at int indexWhoIsShopping(SuperMarket* superMarket)
+	int res5;    // maybe change index to size_t , also at int indexWhoIsShopping(SuperMarket* superMarket)
 	if (superMarket->numOfCustomers == 0)
 	{
 		printf("No customer listed to market\n");
@@ -159,7 +159,7 @@ int case5(SuperMarket* superMarket)
 	}
 	else
 	{
-		customerIndex = indexWhoIsShopping(superMarket);
+		size_t customerIndex = indexWhoIsShopping(superMarket);
 		if (customerIndex == -1)
 			return 0;
 		else if (superMarket->customersArr[customerIndex].cart.numOfSInCart == 0)

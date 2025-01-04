@@ -94,7 +94,7 @@ int isExistID(const char* customerID, const SuperMarket* superMarket)
 }
 
 //barcodes
-int productIndexByBarcode(SuperMarket* superMarket)
+size_t productIndexByBarcode(SuperMarket* superMarket)
 {
     char bcInput[MAX_LEN];
     printf("\nPlease enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
@@ -102,9 +102,9 @@ int productIndexByBarcode(SuperMarket* superMarket)
     return findBarcode(superMarket, bcInput);
 }
 
-int findBarcode(const SuperMarket* superMarket, char* bcInput)
+size_t findBarcode(const SuperMarket* superMarket, char* bcInput)
 {
-    for (int i = 0; i < superMarket->numOfProducts; i++)
+    for (size_t i = 0; i < superMarket->numOfProducts; i++)
     {
         if (strcmp(bcInput, superMarket->productsPointersArr[i]->barCode) == 0)
             return i;
@@ -125,7 +125,7 @@ int uniqueBarcode(char* buffer, const SuperMarket* superMarket)
 }
 
 //moved from manager
-int indexWhoIsShopping(SuperMarket* superMarket)
+size_t indexWhoIsShopping(SuperMarket* superMarket)
 {
     char* choice;
     printAllCustomers(superMarket);
@@ -143,16 +143,15 @@ int indexWhoIsShopping(SuperMarket* superMarket)
         free(choice);
         return -1;
     }
-    int index = findIndexOfCustomer(superMarket, choice);				//REMEMBER TO FREE()!!!!!!!!!!!!!!!!!
+    size_t index = findIndexOfCustomer(superMarket, choice);				//REMEMBER TO FREE()!!!!!!!!!!!!!!!!!
     free(choice);
     return index;
 }
 
 //case 1: 
-
 void updateProductQuantity(SuperMarket* superMarket)
 {
-    int index = productIndexByBarcode(superMarket);
+    size_t index = productIndexByBarcode(superMarket);
     if (index == -1)
         printf("No such product barcode in the super market.\n");
     else
@@ -196,9 +195,9 @@ int addProductToSuperMarket(SuperMarket* superMarket)
     return 1;
 }
 
-int findIndexOfCustomer(const SuperMarket* superMarket,const char* ID)
+size_t findIndexOfCustomer(const SuperMarket* superMarket,const char* ID)
 {
-    for (int i = 0; i < superMarket->numOfCustomers; i++)
+    for (size_t i = 0; i < superMarket->numOfCustomers; i++)
     {
         if(strcmp(superMarket->customersArr[i].id, ID) == 0)
             return i;
@@ -290,7 +289,7 @@ int shopping(SuperMarket* superMarket, size_t indexCustomer)
 }
 
 //case 5:
-int buyAtTheSuperMarket(SuperMarket* superMarket, int customerIndex)
+int buyAtTheSuperMarket(SuperMarket* superMarket, size_t customerIndex)
 {
     char choice;
     printShoppingCart(&superMarket->customersArr[customerIndex].cart);
@@ -299,6 +298,7 @@ int buyAtTheSuperMarket(SuperMarket* superMarket, int customerIndex)
     if (tolower(choice) != 'y')
     {
         /// CREATE METHODS THAT FREE THE WHOLE CART, UPDATE THE QUANTITY OF THE ORIGINAL PRODUCTS AT SUPER AND INITSHOPPINGCART!!!!!! , IF THIS METHOD USE MALLOC STAY INT IF NOT VOID!!!!!!
+        purchaseCanceled(superMarket, customerIndex);
         printf("!!! --- PURCHASE WAS CANCELED --- !!!\n");
     }
     else
@@ -306,9 +306,24 @@ int buyAtTheSuperMarket(SuperMarket* superMarket, int customerIndex)
         printf("-----------------Cart info and bill for %s -----------------", superMarket->customersArr[customerIndex].name);
         printShoppingCart(&superMarket->customersArr[customerIndex].cart);
         printf("!!! --- PAYMENT RECIVED --- !!!\n");
+        //added
+        freeShoppingCart(&superMarket->customersArr[customerIndex].cart);
+        initShoppingCart(&superMarket->customersArr[customerIndex].cart);
         /// JUST INITSHOPPINGCART HERE FOR THIS CUSTOMER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
     return 1;
+}
+
+void purchaseCanceled(SuperMarket* superMarket, size_t customerIndex)
+{
+    for (size_t i = 0; i < superMarket->customersArr[customerIndex].cart.numOfSInCart; i++)
+    {
+        char* currBarcode = superMarket->customersArr[customerIndex].cart.shoppingItemsArr[i]->barCode;
+        size_t productIndex = findBarcode(superMarket, currBarcode);
+        superMarket->productsPointersArr[productIndex]->quantity += superMarket->customersArr[customerIndex].cart.shoppingItemsArr[i]->quantity;
+    }
+    freeShoppingCart(&superMarket->customersArr[customerIndex].cart);
+    initShoppingCart(&superMarket->customersArr[customerIndex].cart);
 }
 
 //case 6:

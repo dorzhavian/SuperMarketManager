@@ -97,6 +97,5 @@ void freeShoppingCart(ShoppingCart* shoppingCart)
         free(shoppingCart->shoppingItemsArr[i]);
     }
     free(shoppingCart->shoppingItemsArr);
-    shoppingCart->shoppingItemsArr = NULL;
-    shoppingCart->numOfSInCart = 0;
+    
 }
