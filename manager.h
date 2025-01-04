@@ -20,8 +20,8 @@ int case4(SuperMarket* superMarket);
 
 int case5(SuperMarket* superMarket);
 
-void case6(SuperMarket* superMarket);
+//void case6(SuperMarket* superMarket);
 
-int indexWhoIsShopping(SuperMarket* superMarket);
+
 
 

@@ -90,10 +90,13 @@ size_t itemIndexInCart(const ShoppingCart* shoppingCart,const char* barcode)
 
 void freeShoppingCart(ShoppingCart* shoppingCart)
 {
+    if (!shoppingCart || !shoppingCart->shoppingItemsArr)
+        return;
     for (size_t i = 0; i < shoppingCart->numOfSInCart; i++)
     {
         free(shoppingCart->shoppingItemsArr[i]);
     }
-    free(shoppingCart);
+    free(shoppingCart->shoppingItemsArr);
+    shoppingCart->shoppingItemsArr = NULL;
+    shoppingCart->numOfSInCart = 0;
 }
-

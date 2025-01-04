@@ -123,4 +123,5 @@ void printCustomer(Customer* customer) {
 void freeCustomer(Customer* customer)
 {
     free(customer->name);
+    freeShoppingCart(&customer->cart);
 }

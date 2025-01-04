@@ -51,6 +51,7 @@ void printSuperMarket(SuperMarket* superMarket)
         printAllCustomers(superMarket);
 }
 
+//customers
 int addCustomer(SuperMarket* superMarket, const Customer* customer)
 {
     superMarket->customersArr = (Customer*)safeRealloc(superMarket->customersArr, (superMarket->numOfCustomers + 1) * (sizeof(Customer)));
@@ -61,26 +62,93 @@ int addCustomer(SuperMarket* superMarket, const Customer* customer)
     return 1;
 }
 
-void InitAndAddCustomer(SuperMarket* superMarket)
+void printAllCustomers(SuperMarket* superMarket)
 {
-    Customer customer;
-    int res;
-    do {
-        initCustomer(&customer);
-        res = isExistID(customer.id, superMarket);
-        if (res)
-            printf("ID %s is not unique!\n", customer.id);
-    } while (res);
-    if (isExistName(customer.name, superMarket))
-    {
-        printf("This customer is already in market\nError adding customer\n");
-        return;
-    }
-    res = addCustomer(superMarket, &customer);
-    if (!res)
-        free(superMarket->customersArr);
-    printf("Customer added Successfully!!\n");
+    printf("\nThere are %d customers.\nCustomers Details:\n-----------------\n", superMarket->numOfCustomers);
+    for (int i = 0; i < superMarket->numOfCustomers; i++)
+        printCustomer(&((superMarket->customersArr)[i]));
 }
+
+int isExistName(const char* customerName, const SuperMarket* superMarket)
+{
+    for (int i = 0; i < superMarket->numOfCustomers; i++)
+    {
+        if (strcmp(customerName, superMarket->customersArr[i].name) == 0)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int isExistID(const char* customerID, const SuperMarket* superMarket)
+{
+    for (int i = 0; i < superMarket->numOfCustomers; i++)
+    {
+        if (strcmp(customerID, superMarket->customersArr[i].id) == 0)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+//barcodes
+int productIndexByBarcode(SuperMarket* superMarket)
+{
+    char bcInput[MAX_LEN];
+    printf("\nPlease enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
+    checkValidBarcodeInput(bcInput);
+    return findBarcode(superMarket, bcInput);
+}
+
+int findBarcode(const SuperMarket* superMarket, char* bcInput)
+{
+    for (int i = 0; i < superMarket->numOfProducts; i++)
+    {
+        if (strcmp(bcInput, superMarket->productsPointersArr[i]->barCode) == 0)
+            return i;
+    }
+    return -1;    // if not found return -1
+}
+
+int uniqueBarcode(char* buffer, const SuperMarket* superMarket)	
+{
+    for (size_t j = 0; j < superMarket->numOfProducts; j++)
+    {
+        if (!(strcmp(buffer, superMarket->productsPointersArr[j]->barCode)))
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+//moved from manager
+int indexWhoIsShopping(SuperMarket* superMarket)
+{
+    char* choice;
+    printAllCustomers(superMarket);
+    printf("\nWho is shopping? Enter customer ID\n");
+    choice = getStrExactLength();			//REMEMBER TO FREE()!!!!!!!!!!!!!!!!!
+    if (!choice)
+    {
+        return -1;
+    }
+    int res;
+    res = isExistID(choice, superMarket);
+    if (!res)
+    {
+        printf("\nThis customer not listed\n");
+        free(choice);
+        return -1;
+    }
+    int index = findIndexOfCustomer(superMarket, choice);				//REMEMBER TO FREE()!!!!!!!!!!!!!!!!!
+    free(choice);
+    return index;
+}
+
+//case 1: 
 
 void updateProductQuantity(SuperMarket* superMarket)
 {
@@ -128,67 +196,100 @@ int addProductToSuperMarket(SuperMarket* superMarket)
     return 1;
 }
 
-int productIndexByBarcode(SuperMarket* superMarket)
+int findIndexOfCustomer(const SuperMarket* superMarket,const char* ID)
 {
-    char bcInput[MAX_LEN];
-    printf("\nPlease enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
-    checkValidBarcodeInput(bcInput);
-    return findBarcode(superMarket, bcInput);
-}
-
-int findBarcode(const SuperMarket* superMarket, char* bcInput)
-{
-    for (int i = 0; i < superMarket->numOfProducts; i++)
+    for (int i = 0; i < superMarket->numOfCustomers; i++)
     {
-        if (strcmp(bcInput, superMarket->productsPointersArr[i]->barCode) == 0)
+        if(strcmp(superMarket->customersArr[i].id, ID) == 0)
             return i;
     }
-    return -1;    // if not found return -1
+    return -1;
 }
 
-int uniqueBarcode(char* buffer, const SuperMarket* superMarket)	
+//case 2:
+void InitAndAddCustomer(SuperMarket* superMarket)
 {
-    for (size_t j = 0; j < superMarket->numOfProducts; j++)
+    Customer customer;
+    int res;
+    do {
+        initCustomer(&customer);
+        res = isExistID(customer.id, superMarket);
+        if (res)
+            printf("ID %s is not unique!\n", customer.id);
+    } while (res);
+    if (isExistName(customer.name, superMarket))
     {
-        if (!(strcmp(buffer, superMarket->productsPointersArr[j]->barCode)))
-        {
+        printf("This customer is already in market\nError adding customer\n");
+        return;
+    }
+    res = addCustomer(superMarket, &customer);
+    if (!res)
+        free(superMarket->customersArr);
+    printf("Customer added Successfully!!\n");
+}
+
+//added to compress case 3:
+int possibleToShopping(const SuperMarket* superMarket)
+{
+    if (superMarket->numOfCustomers == 0)
+    {
+        printf("No customer listed to market\n");
+        return 0;
+    }
+    else if (superMarket->numOfProducts == 0)
+    {
+        printf("No products in market - cannot shop!\n");
+        return 0;
+    }
+    return 1;
+}
+
+int addOrUpdateShoppingCart(SuperMarket* superMarket, size_t indexProduct, size_t indexCustomer)
+{
+    size_t res3;
+    res3 = itemIndexInCart(&(superMarket->customersArr[indexCustomer].cart), superMarket->productsPointersArr[indexProduct]->barCode);
+    if (res3 != -1)
+    {
+        updateShoppingItemQuantityInCart(&(superMarket->customersArr[indexCustomer].cart), superMarket->productsPointersArr[indexProduct], res3);
+    }
+    else
+    {
+        res3 = addShoppingItemToCart(&(superMarket->customersArr[indexCustomer].cart), superMarket->productsPointersArr[indexProduct]);
+        if (!res3)
             return 0;
+    }
+    return 1;
+}
+
+int shopping(SuperMarket* superMarket, size_t indexCustomer)
+{
+    size_t indexProduct;
+    char choice;
+    while (1)
+    {
+        printf("Do you want to shop for a product? y/Y, anything else to exit!");
+        scanf(" %c", &choice);
+        if (tolower(choice) != 'y')
+        {
+            printf("---------- Shopping ended ----------\n");
+            break;
+        }
+        indexProduct = productIndexByBarcode(superMarket);
+        if (indexProduct != -1)
+        {
+
+            if (isProductInStock(superMarket->productsPointersArr[indexProduct]) == 0)
+            {
+                printf("This product out of stock\n");
+                continue;
+            }
+            return (addOrUpdateShoppingCart(superMarket,indexProduct,indexCustomer));
         }
     }
     return 1;
 }
 
-void printAllCustomers(SuperMarket* superMarket)
-{
-    printf("\nThere are %d customers.\nCustomers Details:\n-----------------\n", superMarket->numOfCustomers);
-    for (int i = 0; i < superMarket->numOfCustomers; i++)
-        printCustomer(&((superMarket->customersArr)[i]));
-}
-
-int isExistName(const char* customerName, const SuperMarket* superMarket)
-{
-    for (int i = 0; i < superMarket->numOfCustomers; i++)
-    {
-        if (strcmp(customerName, superMarket->customersArr[i].name) == 0)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-int isExistID(const char* customerID, const SuperMarket* superMarket)
-{
-    for (int i = 0; i < superMarket->numOfCustomers; i++)
-    {
-        if (strcmp(customerID, superMarket->customersArr[i].id) == 0)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
+//case 5:
 int buyAtTheSuperMarket(SuperMarket* superMarket, int customerIndex)
 {
     char choice;
@@ -210,22 +311,7 @@ int buyAtTheSuperMarket(SuperMarket* superMarket, int customerIndex)
     return 1;
 }
 
-void freeSuperMarket(SuperMarket* superMarket)
-{
-
-}
-
-int findIndexOfCustomer(const SuperMarket* superMarket,const char* ID)
-{
-    for (int i = 0; i < superMarket->numOfCustomers; i++)
-    {
-        if(strcmp(superMarket->customersArr[i].id, ID) == 0)
-            return i;
-    }
-    return -1;
-}
-
-
+//case 6:
 void printAllProductsByType(SuperMarket* superMarket)
 {
     if (superMarket->numOfProducts == 0)
@@ -250,4 +336,20 @@ void printAllProductsByType(SuperMarket* superMarket)
                 printProduct(superMarket->productsPointersArr[i]);
         }
     }
+}
+
+//free added
+void freeSuperMarket(SuperMarket* superMarket)
+{
+    free(superMarket->superMarketName);
+    for (size_t i = 0; i < superMarket->numOfProducts; i++)
+    {
+        free(superMarket->productsPointersArr[i]);
+    }
+    free(superMarket->productsPointersArr);
+    for (size_t j = 0; j < superMarket->numOfCustomers; j++)
+    {
+        freeCustomer(&superMarket->customersArr[j]);
+    }
+    free(superMarket->customersArr);
 }

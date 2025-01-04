@@ -109,50 +109,16 @@ void case2(SuperMarket* superMarket)
 
 int case3(SuperMarket* superMarket)
 {
-	size_t indexCustomer, indexProduct, res3;
-	char choice;
-	if (superMarket->numOfCustomers == 0)
-	{
-		printf("No customer listed to market\n");
+	size_t indexCustomer;
+	if (possibleToShopping(superMarket) == 0)
 		return 0;
-	}
-	else if(superMarket->numOfProducts == 0)
-	{
-		printf("No products in market - cannot shop!\n");
-		return 0;
-	}
 	else 
 	{
 		indexCustomer = indexWhoIsShopping(superMarket);
 		if (indexCustomer == -1)
 			return 0;
 		printAllProducts(superMarket);
-		while (1)
-		{
-			printf("Do you want to shop for a product? y/Y, anything else to exit!");
-			scanf(" %c", &choice);
-			if (tolower(choice) != 'y')
-			{
-				printf("---------- Shopping ended ----------\n");
-				break;
-			}
-			indexProduct = productIndexByBarcode(superMarket);
-			if (indexProduct != -1)
-			{
-				res3 = itemIndexInCart(&(superMarket->customersArr[indexCustomer].cart), superMarket->productsPointersArr[indexProduct]->barCode);
-				if (res3 != -1)
-				{
-					updateShoppingItemQuantityInCart(&(superMarket->customersArr[indexCustomer].cart), superMarket->productsPointersArr[indexProduct], res3);
-				}
-				else
-				{
-					res3 = addShoppingItemToCart(&(superMarket->customersArr[indexCustomer].cart), superMarket->productsPointersArr[indexProduct]);
-					if (!res3)
-						return 0;
-				}
-			}
-		}
-		return 1;
+		return shopping(superMarket, indexCustomer);
 	}
 }
 
@@ -209,26 +175,3 @@ int case5(SuperMarket* superMarket)
 	return 1;
 }
 
-//move to the supermarket???
-int indexWhoIsShopping(SuperMarket* superMarket)
-{
-	char* choice;
-	printAllCustomers(superMarket);
-	printf("\nWho is shopping? Enter customer ID\n");
-	choice = getStrExactLength();			//REMEMBER TO FREE()!!!!!!!!!!!!!!!!!
-	if (!choice)
-	{
-		return -1;
-	}
-	int res;
-	res = isExistID(choice, superMarket);
-	if (!res)
-	{
-		printf("\nThis customer not listed\n");
-		free(choice);
-		return -1;
-	}
-	int index = findIndexOfCustomer(superMarket, choice);				//REMEMBER TO FREE()!!!!!!!!!!!!!!!!!
-	free(choice);
-	return index;
-}
