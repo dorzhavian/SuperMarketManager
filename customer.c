@@ -10,17 +10,12 @@
 
 
 int initCustomer(Customer* customer) {
-	int res;
 	initFullName(customer);
 	initId(customer);
-	res = initShoppingCart(&customer->cart);
-	//why????
-    if (!res) 
-		free(&customer->cart);
-	return res;
+	return initShoppingCart(&customer->cart);
 }
 
-int initFirstName(char** firstName)             //Call by reference
+int initFirstName(char** firstName)             
 {
     size_t len;
     printf("Enter first name: \n");
@@ -37,7 +32,7 @@ int initFirstName(char** firstName)             //Call by reference
     return 1;
 }
 
-int initLastName(char** lastName)           //Call by reference
+int initLastName(char** lastName)          
 {
     size_t len;
     printf("Enter last name: \n");
@@ -70,7 +65,7 @@ int initFullName(Customer* customer)
     char* lastName;
     res = initFirstName(&firstName);
     if (!res)
-        return 0;           //REMEMBER TO FREE()!!!!!//
+        return 0;          
     res = initLastName(&lastName);
     if (!res)
     {
@@ -80,7 +75,6 @@ int initFullName(Customer* customer)
     size_t fullNameLength = strlen(firstName) + strlen(lastName) + 4;
     customer->name = malloc(fullNameLength);
     if (customer->name == NULL) {
-        //printf("Memory allocation failed.\n");
         free(lastName);
         free(firstName);
         return 0;
@@ -88,7 +82,6 @@ int initFullName(Customer* customer)
     mergeIntoFullName(customer, firstName, lastName);
     free(lastName);
     free(firstName);
-    // FREE() customer -> name remember !!!!!!
     return 1;
 }
 
@@ -108,17 +101,9 @@ void initId(Customer* customer)
 	strcpy(customer->id, temp);
 }
 
-
 void printCustomer(Customer* customer) {
 	printf("Name: %s\n", customer->name);
-	printf("Id: %s\n", customer->id);
-    /*
-    if (customer->cart.numOfSInCart == 0)
-        printf("Shopping cart is empty!\n\n");
-    else {
-        printShoppingCart(&customer->cart);
-    }
-    */
+	printf("Id: %s\n\n", customer->id);
 }
 
 void freeCustomer(Customer* customer)

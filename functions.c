@@ -19,7 +19,6 @@ char* myGets(char* buffer, int size)
 		if (ok)
 		{
 			char* back = buffer + strlen(buffer);
-			//trim end spaces
 			while ((buffer < back) && (iscntrl(*--back)));
 			*(back + 1) = '\0';
 			return buffer;
@@ -41,12 +40,11 @@ char* getStrExactLength()
 void generateAndAddRandomDigits(char* buffer) 
 {
 	srand((unsigned int)time(NULL));  
-	//do {
-		for (size_t i = 2; i < 7; i++) {
-			buffer[i] = '0' + (rand() % 10);
-		}
-		buffer[7] = '\0';
-	//}while(uniqueBarcode(buffer, superMarket))
+	for (size_t i = 2; i < 7; i++) 
+	{
+		buffer[i] = '0' + (rand() % 10);
+	}
+	buffer[7] = '\0';
 }
 
 void* safeRealloc(void* base, size_t newByteCount)

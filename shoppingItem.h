@@ -11,8 +11,6 @@ typedef struct {
 
 } ShoppingItem;
 
-void createShoppingItem(Product* product, ShoppingItem* shoppingItem); // convert product to shoppingItem for adding to shoppingCart
-
-int initShoppingItem(Product* p);
+void initShoppingItem(Product* product, ShoppingItem* shoppingItem); 
 
 void printShoppingItem(const ShoppingItem* shoppingItem);

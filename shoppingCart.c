@@ -46,18 +46,18 @@ int addShoppingItemToCart(ShoppingCart* shoppingCart, Product* product)
     int num;
     ShoppingItem* pS = (ShoppingItem*)malloc(sizeof(ShoppingItem));
     if (!pS)
-        return 0;           // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        return 0;          
     shoppingCart->shoppingItemsArr = (ShoppingItem**)safeRealloc(shoppingCart->shoppingItemsArr, (shoppingCart->numOfSInCart + 1) * sizeof(ShoppingItem*));
     if (!shoppingCart->shoppingItemsArr)
     {
         free(pS);
-        return 0;          // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        return 0;         
     }
     do {
         printf("How many items do you want? max %d\n", product->quantity);
         scanf("%d", &num);
     } while (num < 1 || num > product->quantity);
-    createShoppingItem(product, pS);
+    initShoppingItem(product, pS);
     pS->quantity = num;
     shoppingCart->shoppingItemsArr[shoppingCart->numOfSInCart] = pS;
     shoppingCart-> numOfSInCart++;

@@ -2,16 +2,11 @@
 
 #include "shoppingItem.h"
 
-void createShoppingItem(Product* product,ShoppingItem* shoppingItem)
+void initShoppingItem(Product* product,ShoppingItem* shoppingItem)
 {
     strcpy(shoppingItem->barCode, product->barCode);
     shoppingItem->price = product->price;
     shoppingItem->quantity = 0;
-}
-
-int initShoppingItem(Product* p)
-{
-    return 0;
 }
 
 void printShoppingItem(const ShoppingItem* shoppingItem)

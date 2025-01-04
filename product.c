@@ -6,18 +6,15 @@
 #include "product.h"
 
 
-void initProduct(Product* product)//, SuperMarket* superMarket)
+void initProduct(Product* product)
 {	
-	printf("Please enter product name up to 20 chars: \n");         
+	printf("Please enter product name up to 20 chars: ");         
 	do {
 		myGets(product -> name, NAME_LEN);
 	} while (!product->name);
-
 	product -> theType = getProductType();
-	
 	strcpy(product -> barCode, preFixTypes[product->theType]);
 	generateAndAddRandomDigits(product->barCode);
-
 	int res;
 	do {
 		res = initDate(&product->expierdDate);
@@ -26,14 +23,12 @@ void initProduct(Product* product)//, SuperMarket* superMarket)
 		if (res == 0)
 			printf("Invalid date format. Must be 8 digits.\n");
 	} while (res != 1);
-
-	printf("Please enter price: \n");
 	do {
+		printf("Please enter price: ");
 		scanf("%f", &product->price);
 	} while (product->price <= 0.0);
-
-	printf("Please enter quantity: \n");
 	do {
+		printf("Please enter quantity: ");
 		scanf("%d", &product->quantity);
 	} while (product->quantity <= 0);
 }
@@ -42,14 +37,14 @@ Type getProductType()
 {
 	int temp;
 	do {
-		printf("Please select a product type: \n");
+		printf("Please select a product type: ");
 		for (int i = 0; i < NofTypes; i++) {
 			printf("%d for %s\n", i, types[i]);
 		}
 		printf("Enter your choice: ");
 		scanf("%d", &temp);
 		if (temp < 0 || temp >= NofTypes) {
-			printf("Invalid choice. Please try again.\n");
+			printf("Invalid choice. Please try again.");
 		}
 	} while (temp < 0 || temp >= NofTypes);
 	return (Type)temp;
@@ -62,8 +57,8 @@ void checkValidBarcodeInput(char* bcInput)
 	char preFix[3];
 	do
 	{
-		myGets(bcInput, MAX_LEN);                  // CHECK IF NEED FGETS CAUSE REMOVE ENTERS      
-		len = strlen(bcInput) + 1;                 // +1 FOR NULL TERMINATOR
+		myGets(bcInput, MAX_LEN);                   
+		len = strlen(bcInput) + 1;                 
 		preFix[0] = bcInput[0];
 		preFix[1] = bcInput[1];
 		preFix[2] = '\0';

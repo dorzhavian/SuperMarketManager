@@ -13,19 +13,19 @@ int initSuperMarket(SuperMarket* superMarket)
     printf("Enter market name: ");
     superMarket->superMarketName = getStrExactLength();
     if (superMarket->superMarketName == NULL)
-        return 0;                                     //REMEMBER TO FREE()!!!!!!!!!!!!!
+        return 0;                                     
     superMarket->productsPointersArr = (Product**)malloc(sizeof(Product*)); 
     if (superMarket->productsPointersArr == NULL)
     {
         free(superMarket->superMarketName);
-        return 0;                                     // REMEMBER FREE() !!!!!!!!!!!!! 
+        return 0;                                    
     }
     superMarket->customersArr = (Customer*)malloc(sizeof(Customer));
     if (superMarket->customersArr == NULL)  
     {
         free(superMarket->superMarketName);
         free(superMarket->productsPointersArr);         
-        return 0;                                   // REMEMBER FREE() !!!!!!!!!!!!! 
+        return 0;                                  
     }
     superMarket->numOfProducts = 0;
     superMarket->numOfCustomers = 0;
@@ -56,7 +56,7 @@ int addCustomer(SuperMarket* superMarket, const Customer* customer)
 {
     superMarket->customersArr = (Customer*)safeRealloc(superMarket->customersArr, (superMarket->numOfCustomers + 1) * (sizeof(Customer)));
     if (superMarket->customersArr == NULL)
-        return 0;         // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        return 0;         
     superMarket->customersArr[superMarket->numOfCustomers] = *customer;
     superMarket->numOfCustomers++;
     return 1;
@@ -150,14 +150,16 @@ size_t indexWhoIsShopping(SuperMarket* superMarket)
 //case 1: 
 void updateProductQuantity(SuperMarket* superMarket)
 {
+    int addStock;
     size_t index = productIndexByBarcode(superMarket);
     if (index == -1)
         printf("No such product barcode in the super market.\n");
     else
     {
-        printf("How many items you want to add to stock? ");
-        int addStock;
-        scanf("%d", &addStock);
+        do {
+            printf("How many items you want to add to stock? ");
+            scanf("%d", &addStock);
+        } while (addStock <= 0);
         superMarket->productsPointersArr[index]->quantity += addStock;
         printf("Stock update Successfully!!\n");
     }
@@ -167,12 +169,12 @@ int addProductToSuperMarket(SuperMarket* superMarket)
 {
     Product* pP = (Product*)malloc(sizeof(Product));
     if (!pP)
-        return 0;           // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        return 0;          
     superMarket->productsPointersArr = (Product**)safeRealloc(superMarket->productsPointersArr, (superMarket->numOfProducts + 1) * sizeof(Product*));
     if (!superMarket->productsPointersArr)
     {
         free(pP);
-        return 0;          // REMEMBER TO FREE() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        return 0;          
     }
     initProduct(pP);
     while (uniqueBarcode(pP->barCode, superMarket) == 0) {
@@ -254,7 +256,7 @@ int shopping(SuperMarket* superMarket, size_t indexCustomer)
     char choice;
     while (1)
     {
-        printf("Do you want to shop for a product? y/Y, anything else to exit!");
+        printf("Do you want to shop for a product? y/Y, anything else to exit! ");
         scanf(" %c", &choice);
         if (tolower(choice) != 'y')
         {
@@ -264,7 +266,6 @@ int shopping(SuperMarket* superMarket, size_t indexCustomer)
         indexProduct = productIndexByBarcode(superMarket);
         if (indexProduct != -1)
         {
-
             if (superMarket->productsPointersArr[indexProduct]->quantity == 0)
             {
                 printf("This product out of stock\n");
@@ -272,6 +273,8 @@ int shopping(SuperMarket* superMarket, size_t indexCustomer)
             }
             return (addOrUpdateShoppingCart(superMarket,indexProduct,indexCustomer));
         }
+        else
+            printf("No such product barcode\n");
     }
     return 1;
 }
@@ -292,7 +295,15 @@ int buyAtTheSuperMarket(SuperMarket* superMarket, size_t customerIndex)
     {
         printf("-----------------Cart info and bill for %s -----------------", superMarket->customersArr[customerIndex].name);
         printShoppingCart(&superMarket->customersArr[customerIndex].cart);
-        printf("!!! --- PAYMENT RECIVED --- !!!\n");
+        printf("                 ____   _ __   ____  __ _____ _   _ _____                              \n"
+           "                |  _ \\ / \\\\ \\ / /  \\/  | ____| \\ | |_   _|                             \n"
+           "                | |_) / _ \\\\ V /| |\\/| |  _| |  \\| | | |                               \n"
+           "                |  __/ ___ \\| | | |  | | |___| |\\  | | |                               \n"
+           "                |_| /_/   \\_\\_|_|_|_ |_|_____|_|_\\_|_|_|  _____ ____  _____ _   _ _    \n"
+           "                            / ___|| | | |/ ___/ ___/ ___|| ____/ ___||  ___| | | | |   \n"
+           "                            \\___ \\| | | | |   \\___ \\___ \\|  _| \\___ \\| |_  | | | | |   \n"
+           "                             ___) | |_| | |___ ___) |__) | |___ ___) |  _| | |_| | |___\n"
+           "                            |____/ \\___/ \\____|____/____/|_____|____/|_|    \\___/|_____|\n");
         freeShoppingCart(&superMarket->customersArr[customerIndex].cart);
         return initShoppingCart(&superMarket->customersArr[customerIndex].cart);
     }
@@ -321,7 +332,7 @@ void printAllProductsByType(SuperMarket* superMarket)
     }
     Type type = getProductType();
     size_t i;
-    for (i = 0; i < superMarket->numOfProducts && superMarket->productsPointersArr[i]->theType != type; i++);     // fast for - check if exist products of the current type
+    for (i = 0; i < superMarket->numOfProducts && superMarket->productsPointersArr[i]->theType != type; i++);     
     if (i == superMarket->numOfProducts)
     {
         printf("\nThere are no product of type %s in market %s\n", types[type], superMarket->superMarketName);
@@ -338,7 +349,7 @@ void printAllProductsByType(SuperMarket* superMarket)
     }
 }
 
-//free added
+//free
 void freeSuperMarket(SuperMarket* superMarket)
 {
     free(superMarket->superMarketName);
