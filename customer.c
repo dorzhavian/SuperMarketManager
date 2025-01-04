@@ -27,7 +27,6 @@ int initFirstName(char** firstName)             //Call by reference
     do {
         *firstName = getStrExactLength();
         if (!(*firstName)) {
-            //printf("Memory allocation failed.\n");
             return 0;
         }
         len = strlen(*firstName);

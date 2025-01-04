@@ -9,11 +9,9 @@
 
 int initShoppingCart(ShoppingCart* shoppingCart)
 {
-    if (shoppingCart == NULL)
-        return 0;
     shoppingCart->shoppingItemsArr = (ShoppingItem**)malloc(sizeof(ShoppingItem*));
     if (!shoppingCart->shoppingItemsArr)
-        return 0;                             // REMEMBER TO FREE ()!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        return 0;                           
     shoppingCart-> numOfSInCart = 0;
     return 1;
 }

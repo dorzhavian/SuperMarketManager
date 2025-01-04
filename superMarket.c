@@ -124,13 +124,12 @@ int uniqueBarcode(char* buffer, const SuperMarket* superMarket)
     return 1;
 }
 
-//moved from manager
 size_t indexWhoIsShopping(SuperMarket* superMarket)
 {
     char* choice;
     printAllCustomers(superMarket);
     printf("\nWho is shopping? Enter customer ID\n");
-    choice = getStrExactLength();			//REMEMBER TO FREE()!!!!!!!!!!!!!!!!!
+    choice = getStrExactLength();			
     if (!choice)
     {
         return -1;
@@ -143,7 +142,7 @@ size_t indexWhoIsShopping(SuperMarket* superMarket)
         free(choice);
         return -1;
     }
-    size_t index = findIndexOfCustomer(superMarket, choice);				//REMEMBER TO FREE()!!!!!!!!!!!!!!!!!
+    size_t index = findIndexOfCustomer(superMarket, choice);				
     free(choice);
     return index;
 }
@@ -162,17 +161,6 @@ void updateProductQuantity(SuperMarket* superMarket)
         superMarket->productsPointersArr[index]->quantity += addStock;
         printf("Stock update Successfully!!\n");
     }
-}
-
-//maybe not neccessery
-void addNewProduct(SuperMarket* superMarket)
-{
-    int res = addProductToSuperMarket(superMarket);
-    //if (!res)
-    // 
-        //free(superMarket->productsPointersArr);
-    //else
-        printf("\nProduct Added Successfully!!!\n");
 }
 
 int addProductToSuperMarket(SuperMarket* superMarket)
@@ -227,7 +215,7 @@ void InitAndAddCustomer(SuperMarket* superMarket)
     printf("Customer added Successfully!!\n");
 }
 
-//added to compress case 3:
+//case 3:
 int possibleToShopping(const SuperMarket* superMarket)
 {
     if (superMarket->numOfCustomers == 0)
@@ -277,7 +265,7 @@ int shopping(SuperMarket* superMarket, size_t indexCustomer)
         if (indexProduct != -1)
         {
 
-            if (isProductInStock(superMarket->productsPointersArr[indexProduct]) == 0)
+            if (superMarket->productsPointersArr[indexProduct]->quantity == 0)
             {
                 printf("This product out of stock\n");
                 continue;
@@ -297,7 +285,6 @@ int buyAtTheSuperMarket(SuperMarket* superMarket, size_t customerIndex)
     scanf(" %c", &choice);
     if (tolower(choice) != 'y')
     {
-        /// CREATE METHODS THAT FREE THE WHOLE CART, UPDATE THE QUANTITY OF THE ORIGINAL PRODUCTS AT SUPER AND INITSHOPPINGCART!!!!!! , IF THIS METHOD USE MALLOC STAY INT IF NOT VOID!!!!!!
         purchaseCanceled(superMarket, customerIndex);
         printf("!!! --- PURCHASE WAS CANCELED --- !!!\n");
     }
@@ -306,10 +293,8 @@ int buyAtTheSuperMarket(SuperMarket* superMarket, size_t customerIndex)
         printf("-----------------Cart info and bill for %s -----------------", superMarket->customersArr[customerIndex].name);
         printShoppingCart(&superMarket->customersArr[customerIndex].cart);
         printf("!!! --- PAYMENT RECIVED --- !!!\n");
-        //added
         freeShoppingCart(&superMarket->customersArr[customerIndex].cart);
-        initShoppingCart(&superMarket->customersArr[customerIndex].cart);
-        /// JUST INITSHOPPINGCART HERE FOR THIS CUSTOMER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        return initShoppingCart(&superMarket->customersArr[customerIndex].cart);
     }
     return 1;
 }

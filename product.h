@@ -30,6 +30,4 @@ void printProduct(const Product* product);
 
 void checkValidBarcodeInput(char* bcInput);
 
-int isProductInStock(Product* product);
-
 Type getProductType();

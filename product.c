@@ -82,14 +82,6 @@ void checkValidBarcodeInput(char* bcInput)
 	} while (len != BC_LEN || !isValidPreFix);
 }
 
-int isProductInStock(Product* product)
-{
-	if (product->quantity > 0)
-		return 1;
-	else
-		return 0;
-}
-
 void printProduct(const Product* product) {
 	printf("%-20s %-20s %-20s %-10.2f %-20d ", product->name, product->barCode, types[product->theType], product->price, product->quantity);
 	printDate(&(product->expierdDate));

@@ -34,7 +34,7 @@ int start(SuperMarket* superMarket)
 		switch (choice)
 		{
 		case 0:
-			case0(superMarket);
+			printSuperMarket(superMarket);
 			break;
 		case 1:
 			res = case1(superMarket);
@@ -42,7 +42,7 @@ int start(SuperMarket* superMarket)
 				printf("\nError in adding product\n");
 			break;
 		case 2:
-			case2(superMarket);
+			InitAndAddCustomer(superMarket);
 			break;
 		case 3:
 			res = case3(superMarket);
@@ -71,20 +71,16 @@ int start(SuperMarket* superMarket)
 	return 1;
 }
 
-void case0(SuperMarket* superMarket)
-{
-	printSuperMarket(superMarket);
-}
-
-//move to superMarket ????
 int case1(SuperMarket* superMarket)
 {
-	//make method addOrUpdateProductToSuperMarket
 	char choice;
 	printf("Adding new Product? y/Y : ");
 	scanf(" %c", &choice);
 	if (tolower(choice) == 'y')
-		addNewProduct(superMarket);
+	{
+		addProductToSuperMarket(superMarket);
+		printf("\nProduct Added Successfully!!!\n");
+	}
 	else
 	{
 		if (superMarket->numOfProducts == 0)
@@ -100,11 +96,6 @@ int case1(SuperMarket* superMarket)
 			return 1;
 	}
 	return 1;
-}
-
-void case2(SuperMarket* superMarket)
-{
-	InitAndAddCustomer(superMarket);
 }
 
 int case3(SuperMarket* superMarket)
@@ -134,7 +125,6 @@ int case4(SuperMarket* superMarket)
 		printf("No products in market - cannot shop!\n");
 	else
 	{
-		//printAllCustomers(superMarket);
 		res4 = indexWhoIsShopping(superMarket);
 		if (res4 == -1)
 			return 0;
@@ -146,7 +136,7 @@ int case4(SuperMarket* superMarket)
 
 int case5(SuperMarket* superMarket)
 { 
-	int res5;    // maybe change index to size_t , also at int indexWhoIsShopping(SuperMarket* superMarket)
+	int res5;
 	if (superMarket->numOfCustomers == 0)
 	{
 		printf("No customer listed to market\n");
@@ -155,7 +145,6 @@ int case5(SuperMarket* superMarket)
 	else if (superMarket->numOfProducts == 0)
 	{
 		printf("No products in market - cannot shop!\n");
-
 	}
 	else
 	{
@@ -168,9 +157,7 @@ int case5(SuperMarket* superMarket)
 			return 0;
 		}
 		else 
-		{
 			res5 = buyAtTheSuperMarket(superMarket, customerIndex);
-		}
 	}
 	return 1;
 }
