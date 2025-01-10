@@ -37,7 +37,7 @@ Type getProductType()
 {
 	int temp;
 	do {
-		printf("Please select a product type: ");
+		printf("Please select a product type: \n");
 		for (int i = 0; i < NofTypes; i++) {
 			printf("%d for %s\n", i, types[i]);
 		}

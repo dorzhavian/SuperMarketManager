@@ -8,7 +8,7 @@ typedef struct {
 } ShoppingCart;
 
 int initShoppingCart(ShoppingCart* shoppingCart);
-void printShoppingCart(ShoppingCart* shoppingCart);
+void printShoppingCart(const ShoppingCart* shoppingCart);
 float calcOfTotalPay(const ShoppingCart* shoppingCart); 
 int addShoppingItemToCart(ShoppingCart* shoppingCart, Product* product);
 void updateShoppingItemQuantityInCart(ShoppingCart* shoppingCart, Product* product, size_t index);

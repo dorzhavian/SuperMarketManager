@@ -17,7 +17,7 @@ int initSuperMarket(SuperMarket* superMarket);
 
 void printAllProducts(const SuperMarket* superMarket);
 
-void printSuperMarket(SuperMarket* superMarket);
+void printSuperMarket(const SuperMarket* superMarket);
 
 //customers
 int addCustomer(SuperMarket* superMarket, const Customer* customer);
@@ -26,17 +26,18 @@ int isExistName(const char* customer, const SuperMarket* superMarket);
 
 int isExistID(const char* customer, const SuperMarket* superMarket);
 
-void printAllCustomers(SuperMarket* superMarket);
+void printAllCustomers(const SuperMarket* superMarket);
+
+size_t indexWhoIsShopping(const SuperMarket* superMarket);
+
 
 //barcodes
 size_t findBarcode(const SuperMarket* superMarket, char* bcInput);
 
 int uniqueBarcode(char* buffer, const SuperMarket* superMarket);
 
-size_t productIndexByBarcode(SuperMarket* superMarket);
+size_t productIndexByBarcode(const SuperMarket* superMarket);
 
-//moved from manager
-size_t indexWhoIsShopping(SuperMarket* superMarket);
 
 //case 1:
 void updateProductQuantity(SuperMarket* superMarket);
@@ -48,7 +49,7 @@ size_t findIndexOfCustomer(const SuperMarket* superMarket, const char* ID);
 //case 2:
 void InitAndAddCustomer(SuperMarket* superMarket);
 
-//added to compress case 3:
+//case 3:
 int possibleToShopping(const SuperMarket* superMarket);
 
 int addOrUpdateShoppingCart(SuperMarket* superMarket, size_t indexProduct, size_t indexCustomer);
@@ -61,7 +62,7 @@ int buyAtTheSuperMarket(SuperMarket* superMarket, size_t customerIndex);
 void purchaseCanceled(SuperMarket* superMarket, size_t customerIndex);
 
 //case 6:
-void printAllProductsByType(SuperMarket* superMarket);
+void printAllProductsByType(const SuperMarket* superMarket);
 
 //free
 void freeSuperMarket(SuperMarket* superMarket);

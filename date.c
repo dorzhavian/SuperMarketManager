@@ -10,7 +10,7 @@ int initDate(Date* date) {
 	char temp[MAX_LEN] = { 0 };
 	size_t res;
 
-	printf("Enter a date in the format ddmmyyyy: \n");
+	printf("Enter a date in the format ddmmyyyy: ");
 	myGets(temp, sizeof(temp));
 	res = strlen(temp);
 	if (res != 8)

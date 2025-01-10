@@ -16,18 +16,19 @@ int initShoppingCart(ShoppingCart* shoppingCart)
     return 1;
 }
 
-void printShoppingCart(ShoppingCart* shoppingCart)
+void printShoppingCart(const ShoppingCart* shoppingCart)
 {
     if (shoppingCart->numOfSInCart == 0)
         printf("Cart is empty\n");
     else 
     {
         float check = calcOfTotalPay(shoppingCart);
+        printf("\n\n");
         for (size_t i = 0; i < shoppingCart->numOfSInCart; i++)
         {
             printShoppingItem(shoppingCart->shoppingItemsArr[i]);
         }
-        printf("Total bill to pay: %.2f\n\n", check);
+        printf("-----------------------------\nTotal bill to pay: %.2f\n-----------------------------\n", check);
     }
 }
 

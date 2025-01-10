@@ -43,7 +43,7 @@ void printAllProducts(const SuperMarket* superMarket)
     printf("\n");
 }
 
-void printSuperMarket(SuperMarket* superMarket)
+void printSuperMarket(const SuperMarket* superMarket)
 {
     printf("\nSuper Market Name: %s \n", superMarket->superMarketName);
     printAllProducts(superMarket);
@@ -62,7 +62,7 @@ int addCustomer(SuperMarket* superMarket, const Customer* customer)
     return 1;
 }
 
-void printAllCustomers(SuperMarket* superMarket)
+void printAllCustomers(const SuperMarket* superMarket)
 {
     printf("\nThere are %d customers.\nCustomers Details:\n-----------------\n", superMarket->numOfCustomers);
     for (int i = 0; i < superMarket->numOfCustomers; i++)
@@ -94,7 +94,7 @@ int isExistID(const char* customerID, const SuperMarket* superMarket)
 }
 
 //barcodes
-size_t productIndexByBarcode(SuperMarket* superMarket)
+size_t productIndexByBarcode(const SuperMarket* superMarket)
 {
     char bcInput[MAX_LEN];
     printf("\nPlease enter a valid barcode of product in the shop.\nBarcode must be 7 length exactly.\nMust have 2 type prefix letters followed by a 5 digits number.\nFor Example: FR20301\n");
@@ -124,11 +124,11 @@ int uniqueBarcode(char* buffer, const SuperMarket* superMarket)
     return 1;
 }
 
-size_t indexWhoIsShopping(SuperMarket* superMarket)
+size_t indexWhoIsShopping(const SuperMarket* superMarket)
 {
     char* choice;
     printAllCustomers(superMarket);
-    printf("\nWho is shopping? Enter customer ID\n");
+    printf("\nWho is shopping? (Enter customer ID): ");
     choice = getStrExactLength();			
     if (!choice)
     {
@@ -323,7 +323,7 @@ void purchaseCanceled(SuperMarket* superMarket, size_t customerIndex)
 }
 
 //case 6:
-void printAllProductsByType(SuperMarket* superMarket)
+void printAllProductsByType(const SuperMarket* superMarket)
 {
     if (superMarket->numOfProducts == 0)
     {

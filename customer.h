@@ -10,14 +10,14 @@
 
 typedef struct {
 	char id[ID_LEN];
-	char* name;						//REMEMBER TO FREE()!!!!!!!!!!
-	ShoppingCart cart;              // CHECK IF MAKE A POINTER 
+	char* name;						
+	ShoppingCart cart;               
 } Customer;
 
 
 int initCustomer(Customer* customer);
 
-void printCustomer(Customer* customer);
+void printCustomer(const Customer* customer);
 
 void initId(Customer* customer);
 
@@ -29,4 +29,4 @@ void mergeIntoFullName(Customer* customer, char* firstName, char* lastName);
 
 int initFullName(Customer* customer);
 
-void freeCustomer(Customer* customer);   // use freeShoppingCart for each seller
+void freeCustomer(Customer* customer);  

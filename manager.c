@@ -113,7 +113,7 @@ int case3(SuperMarket* superMarket)
 	}
 }
 
-int case4(SuperMarket* superMarket)
+int case4(const SuperMarket* superMarket)
 {
 	size_t res4;
 	if (superMarket->numOfCustomers == 0)

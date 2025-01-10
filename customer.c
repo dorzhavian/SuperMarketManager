@@ -101,7 +101,7 @@ void initId(Customer* customer)
 	strcpy(customer->id, temp);
 }
 
-void printCustomer(Customer* customer) {
+void printCustomer(const Customer* customer) {
 	printf("Name: %s\n", customer->name);
 	printf("Id: %s\n\n", customer->id);
 }
